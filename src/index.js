@@ -69,21 +69,20 @@ const InputBox = styled.span`
         padding: 10px;
         transition: all .1s ease;
         border: 1px solid rgba(0,0,0,.1);
-        border-radius: ${config.rounded};
+        border-radius: ${config.rounded} ${config.rounded} 0 ${config.rounded};
         margin: 0;
-        box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 6px, rgba(0, 0, 0, 0.09) 0px 1px 4px;
     }
 
     textarea:focus {
         outline: none;
-        border-color: rgba(0,0,0,.3);
+        border-color: ${props => props.color};
     }
 `;
 
 const SpanBlock = styled.span`
     display: block;;
     text-align: right;
-    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
     background-color: white;
     color: #ccc;
 `;
@@ -92,14 +91,15 @@ const Button = styled.button`
     border: 0;
     outline: none;
     cursor: pointer;
-    background-color: #555;
     color: white;
     padding: .25em 1em;
     border: 1px solid rgba(0,0,0,.05);
     border-radius: 0 0 0 ${config.rounded};
+    background-color: ${props => props.color};
+    opacity: .85;
 
     &:hover {
-        background-color: #333;
+        opacity: 1;
     }
 `;
 
@@ -118,11 +118,14 @@ const Label = styled.span`
 
 const Hint = styled.span`
     position: absolute;
+    user-select: none;
     left: 0;
     bottom: 25px;
     padding: .5em 1em;
-    color: rgba(0,0,0,.4);
-    font: italic normal 10px Arial, sans-serif;
+    color: ${props => props.color};
+    opacity: .25;
+    font: normal 11px Arial, sans-serif;
+    letter-spacing: -.25px;
 `;
 
 /**
@@ -134,7 +137,7 @@ class InlineEditable extends React.Component {
         super(props);
         this.state = {
             value: props.value || '',
-            show: true,
+            show: false,
             inputStyles: {},
             iconStyles: {},
         };
@@ -150,7 +153,7 @@ class InlineEditable extends React.Component {
     }
 
     onKeyDown(e) {
-        if (e.keyCode === 13) this.submit(); // enter
+        if (e.keyCode === 13 && !e.shiftKey) this.submit(); // enter
         if (e.keyCode === 27) this.switch(); // escape
     }
 
@@ -197,17 +200,17 @@ class InlineEditable extends React.Component {
 
         this.setState({
             iconStyles: {
-                top: height - 24,
+                top: height - 22,
             },
         });
     }
 
     render() {
-        const { submitText, showEditIcon, children } = this.props;
+        const { submitText, showEditIcon, children, primaryColor } = this.props;
 
         return (
             <Container onMouseEnter={this.hover}>
-                <InputBox show={this.state.show}>
+                <InputBox show={this.state.show} color={primaryColor}>
                     {
                         this.state.show &&
                         <textarea
@@ -220,15 +223,15 @@ class InlineEditable extends React.Component {
                         />
                     }
 
-                    <Hint>
-                        Enter: Apply, Esc: Cancel
+                    <Hint color={primaryColor}>
+                        Press <b>Enter</b> to Apply, <b>Esc</b> to Cancel
                     </Hint>
 
                     <SpanBlock>
-                        <Button onClick={this.submit}>
-                            <MdCheck size={16} /> {submitText || ' apply'}
+                        <Button onClick={this.submit} color={primaryColor}>
+                            <MdCheck size={16} /> {submitText}
                         </Button>
-                        <Cancel onClick={this.switch}>
+                        <Cancel onClick={this.switch} color={primaryColor}>
                             <MdClear size={16} /> cancel
                         </Cancel>
                     </SpanBlock>
@@ -261,10 +264,18 @@ InlineEditable.propTypes = {
         PropTypes.element,
         PropTypes.string,
     ]),
-    /** Default: 'apply'. Submit text for the input. */
+    /** primary color. */
+    primaryColor: PropTypes.string,
+    /** Submit text for the input. */
     submitText: PropTypes.string,
-    /** Default: true. Show edit indicator when the text is hovered. */
+    /** Show edit indicator when the text is hovered. */
     showEditIcon: PropTypes.bool,
+};
+
+InlineEditable.defaultProps = {
+    submitText: 'apply',
+    showEditIcon: true,
+    primaryColor: '#555',
 };
 
 export default InlineEditable;
