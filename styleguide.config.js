@@ -9,7 +9,7 @@ module.exports = {
 			loaders: loaders.all,
 		},
 	},
-	showCode: true,
+	showCode: false,
 	showSidebar: false,
 	styleguideDir: 'public',
 };

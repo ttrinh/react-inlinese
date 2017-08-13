@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import MdCreate from 'react-icons/lib/md/create';
+import MdCheck from 'react-icons/lib/md/check';
+import MdClear from 'react-icons/lib/md/clear';
 
 import { findParentByClass } from './helpers';
 
@@ -21,6 +24,28 @@ const Container = styled.span`
     * {
         box-sizing: border-box;
     }
+
+    .edit-indicator {
+        position: absolute;
+        background-color: white;
+        top: -5px;
+        right: 0;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        font: sans-serif;
+        font-weight: normal;
+        border-radius: 50%;
+        border: 1px solid rgba(0,0,0,.2);
+        transition: all .12s ease;
+        color: #555;
+        opacity: 0;
+    }
+
+    &:hover .edit-indicator {
+        right: -26px;
+        opacity: 1;
+    }
 `;
 
 const InputBox = styled.span`
@@ -30,6 +55,7 @@ const InputBox = styled.span`
     left: -10px;
     overflow: hidden;
     transition: all .2s ease;
+    background-color: white;
 
     border-radius: ${config.rounded} ${config.rounded} 0 ${config.rounded};
     height: ${props => (props.show ? 'auto' : '0')};
@@ -55,7 +81,7 @@ const InputBox = styled.span`
 `;
 
 const SpanBlock = styled.span`
-    display: block;
+    display: block;;
     text-align: right;
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
     background-color: white;
@@ -68,7 +94,7 @@ const Button = styled.button`
     cursor: pointer;
     background-color: #555;
     color: white;
-    padding: .25em 1.5em;
+    padding: .25em 1em;
     border: 1px solid rgba(0,0,0,.05);
     border-radius: 0 0 0 ${config.rounded};
 
@@ -83,33 +109,38 @@ const Cancel = styled(Button)`
 
 const Label = styled.span`
     cursor: pointer;
+    position: relative;
 
-    .edit-icon {
-        margin-left: .5em;
-        display: inline-block;
-        transition: all .12s ease;
-        transform: rotate(70deg);
-        opacity: 0;
-    }
-
-    &:hover .edit-icon {
-        opacity: 1
+    &:hover {
+        border-bottom: 1px dashed rgba(0,0,0,.2);
     }
 `;
 
+const Hint = styled.span`
+    position: absolute;
+    left: 0;
+    bottom: 25px;
+    padding: .5em 1em;
+    color: rgba(0,0,0,.4);
+    font: italic normal 10px Arial, sans-serif;
+`;
+
 /**
- * React component for editing text inline. Only support text as **string**
+ * React component for editing text inline.
+ * > * Note: Only support value as **string**
  */
 class InlineEditable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             value: props.value || '',
-            show: false,
+            show: true,
             inputStyles: {},
+            iconStyles: {},
         };
         this.switch = this.switch.bind(this);
         this.submit = this.submit.bind(this);
+        this.hover = this.hover.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
     }
@@ -159,39 +190,62 @@ class InlineEditable extends React.Component {
         this.switch();
     }
 
+    hover(e) {
+        const node = e.target;
+        const height = node.offsetHeight;
+        if (!height) return;
+
+        this.setState({
+            iconStyles: {
+                top: height - 24,
+            },
+        });
+    }
+
     render() {
-        const { submitText, showEditIcon, value } = this.props;
+        const { submitText, showEditIcon, children } = this.props;
 
         return (
-            <Container>
+            <Container onMouseEnter={this.hover}>
                 <InputBox show={this.state.show}>
-                    <textarea
-                        type="text"
-                        onKeyDown={this.onKeyDown}
-                        onChange={this.onChange}
-                        value={this.state.value}
-                        ref={input => input && input.focus()}
-                        style={this.state.inputStyles}
-                    />
+                    {
+                        this.state.show &&
+                        <textarea
+                            type="text"
+                            onKeyDown={this.onKeyDown}
+                            onChange={this.onChange}
+                            value={this.state.value}
+                            ref={input => input && input.focus()}
+                            style={this.state.inputStyles}
+                        />
+                    }
+
+                    <Hint>
+                        Enter: Apply, Esc: Cancel
+                    </Hint>
 
                     <SpanBlock>
                         <Button onClick={this.submit}>
-                            {submitText || ' apply'}
+                            <MdCheck size={16} /> {submitText || ' apply'}
                         </Button>
                         <Cancel onClick={this.switch}>
-                            ✕
+                            <MdClear size={16} /> cancel
                         </Cancel>
                     </SpanBlock>
                 </InputBox>
 
                 <Label onClick={this.switch} className="r-ie">
-                    {value}
-
-                    {
-                        showEditIcon &&
-                        <div className="edit-icon">✎</div>
-                    }
+                    {children}
                 </Label>
+
+                { showEditIcon !== false &&
+                    <span
+                        className="edit-indicator"
+                        style={this.state.iconStyles}
+                    >
+                        <MdCreate size={14} />
+                    </span>
+                }
             </Container>
         );
     }
@@ -202,9 +256,14 @@ InlineEditable.propTypes = {
     value: PropTypes.string.isRequired,
     /** Process function when the text is submit */
     onSubmit: PropTypes.func.isRequired,
-    /** Submit text for the input. Default is "apply". */
+    /** Children component */
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.string,
+    ]),
+    /** Default: 'apply'. Submit text for the input. */
     submitText: PropTypes.string,
-    /** Show edit indicator when the text is hovered */
+    /** Default: true. Show edit indicator when the text is hovered. */
     showEditIcon: PropTypes.bool,
 };
 

@@ -1,23 +1,29 @@
 ***
 #### Basic Usage
 ```js
-const onSubmit = value => console.log('value');
+const onSubmit = value => console.log(value);
+const shortText = 'This text is editable inside italic tag';
+const longText = 'It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text.';
 <div>
     <p>
         <i>
             <InlineEditable
                 onSubmit={onSubmit}
-                value="This text is editable inside <i> tag"
-            />
+                value={shortText}
+            >
+                {shortText}
+            </InlineEditable>
         </i>
-        . diet aliquam leo, sed consequat lectus auctor et. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        . diet aliquam leo, sed consequat lectus auctor et.
     </p>
     <p>
         <b>
             <InlineEditable
                 onSubmit={onSubmit}
-                value="It works with long paragraph. It works with long paragraph. It works with long paragraph. It works with long paragraph. "
-            />
+                value={longText}
+            >
+                {longText}
+            </InlineEditable>
         </b>
 
         Proin id arcu accumsan, volutpat nunc quis, rhoncus diam. Ut dictum est ac elit vestibulum, posuere convallis augue iaculis. Vivamus imperdiet aliquam leo, sed consequat lectus auctor et. Lorem ipsum dolor sit amet, consectetur adipiscing elit.

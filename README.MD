@@ -8,7 +8,7 @@ DEV (Run Documentation)
 `yarn start`
 
 BUILD
-`yarn run build`
+`yarn build`
 
 TEST
 `yarn test`
