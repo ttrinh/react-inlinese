@@ -1,132 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import MdCreate from 'react-icons/lib/md/create';
-import MdCheck from 'react-icons/lib/md/check';
-import MdClear from 'react-icons/lib/md/clear';
 
-import { findParentByClass } from './helpers';
+import Buttons from './Subs/Buttons';
+import { findParentByClass, calcInputBoxStyle } from './helpers';
+import { Container, InputBox, Label, Hint } from './style';
 
-
-const config = {
-    minWidth: 200,
-    minHeight: 50,
-    padding: 10,
-    extraSpace: 20,
-    rounded: '3px',
-};
-
-const Container = styled.span`
-    position: relative;
-    text-align: left;
-    box-sizing: border-box;
-
-    * {
-        box-sizing: border-box;
-    }
-
-    .edit-indicator {
-        position: absolute;
-        background-color: white;
-        top: -5px;
-        right: 0;
-        width: 24px;
-        height: 24px;
-        text-align: center;
-        font: sans-serif;
-        font-weight: normal;
-        border-radius: 50%;
-        border: 1px solid rgba(0,0,0,.2);
-        transition: all .12s ease;
-        color: #555;
-        opacity: 0;
-    }
-
-    &:hover .edit-indicator {
-        right: -26px;
-        opacity: 1;
-    }
-`;
-
-const InputBox = styled.span`
-    z-index: 200;
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    overflow: hidden;
-    transition: all .2s ease;
-    background-color: white;
-
-    border-radius: ${config.rounded} ${config.rounded} 0 ${config.rounded};
-    height: ${props => (props.show ? 'auto' : '0')};
-    opacity: ${props => (props.show ? '1' : '0')};
-
-    textarea {
-        box-sizing: border-box;
-        resize: none;
-        vertical-align: top;
-        font: inherit;
-        padding: 10px;
-        transition: all .1s ease;
-        border: 1px solid rgba(0,0,0,.1);
-        border-radius: ${config.rounded} ${config.rounded} 0 ${config.rounded};
-        margin: 0;
-        box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 6px, rgba(0, 0, 0, 0.09) 0px 1px 4px;
-    }
-
-    textarea:focus {
-        outline: none;
-        border-color: ${props => props.color};
-    }
-`;
-
-const SpanBlock = styled.span`
-    display: block;;
-    text-align: right;
-    background-color: white;
-    color: #ccc;
-`;
-
-const Button = styled.button`
-    border: 0;
-    outline: none;
-    cursor: pointer;
-    color: white;
-    padding: .25em 1em;
-    border: 1px solid rgba(0,0,0,.05);
-    border-radius: 0 0 0 ${config.rounded};
-    background-color: ${props => props.color};
-    opacity: .85;
-
-    &:hover {
-        opacity: 1;
-    }
-`;
-
-const Cancel = styled(Button)`
-    border-radius: 0 0 ${config.rounded} 0;
-`;
-
-const Label = styled.span`
-    cursor: pointer;
-    position: relative;
-
-    &:hover {
-        border-bottom: 1px dashed rgba(0,0,0,.2);
-    }
-`;
-
-const Hint = styled.span`
-    position: absolute;
-    user-select: none;
-    left: 0;
-    bottom: 25px;
-    padding: .5em 1em;
-    color: ${props => props.color};
-    opacity: .25;
-    font: normal 11px Arial, sans-serif;
-    letter-spacing: -.25px;
-`;
 
 /**
  * React component for editing text inline.
@@ -138,8 +17,8 @@ class InlineEditable extends React.Component {
         this.state = {
             value: props.value || '',
             show: false,
-            inputStyles: {},
-            iconStyles: {},
+            inputStyle: {},
+            iconStyle: {},
         };
         this.switch = this.switch.bind(this);
         this.submit = this.submit.bind(this);
@@ -158,38 +37,26 @@ class InlineEditable extends React.Component {
     }
 
     // calculate the input styles.
-    setInputStyles(element) {
+    setInputStyle(element) {
         if (this.state.show) return;
         const node = findParentByClass(element, 'r-ie');
-
-        // Calculate width and height
-        const w = node.offsetWidth + (config.padding * 2) + config.extraSpace;
-        const h = node.offsetHeight + (config.padding * 2) + config.extraSpace;
-        const width = w < config.minWidth ? config.minWidth : w;
-        const height = h < config.minHeight ? config.minHeight : h;
-
         this.setState({
-            inputStyles: { width, height },
+            inputStyle: calcInputBoxStyle(node),
         });
     }
 
     switch(e) {
+        // when the label is clicked, so it includes event info
         if (e) {
-            this.setInputStyles(e.target);
+            this.setInputStyle(e.target);
             this.setState({ value: this.props.value });
         }
         this.setState({ show: !this.state.show });
     }
 
     submit() {
-        if (!this.state.value) return;
-
-        const sanitizedValue = this.state.value.trim();
-
-        if (this.props.onSubmit) {
-            this.props.onSubmit.call(null, sanitizedValue);
-        }
-
+        const value = this.state.value.trim();
+        this.props.onSubmit(value);
         this.switch();
     }
 
@@ -199,18 +66,25 @@ class InlineEditable extends React.Component {
         if (!height) return;
 
         this.setState({
-            iconStyles: {
+            iconStyle: {
                 top: height - 22,
             },
         });
     }
 
     render() {
-        const { submitText, showEditIcon, children, primaryColor } = this.props;
+        const {
+            submitText, showEditIcon, children,
+            primaryColor, secondaryColor, roundness,
+        } = this.props;
 
         return (
             <Container onMouseEnter={this.hover}>
-                <InputBox show={this.state.show} color={primaryColor}>
+                <InputBox
+                    show={this.state.show}
+                    color={primaryColor}
+                    roundness={roundness}
+                >
                     {
                         this.state.show &&
                         <textarea
@@ -219,22 +93,22 @@ class InlineEditable extends React.Component {
                             onChange={this.onChange}
                             value={this.state.value}
                             ref={input => input && input.focus()}
-                            style={this.state.inputStyles}
+                            style={this.state.inputStyle}
                         />
                     }
 
                     <Hint color={primaryColor}>
-                        Press <b>Enter</b> to Apply, <b>Esc</b> to Cancel
+                        <b>Enter</b>: Apply, <b>Esc</b>: Cancel
                     </Hint>
 
-                    <SpanBlock>
-                        <Button onClick={this.submit} color={primaryColor}>
-                            <MdCheck size={16} /> {submitText}
-                        </Button>
-                        <Cancel onClick={this.switch} color={primaryColor}>
-                            <MdClear size={16} /> cancel
-                        </Cancel>
-                    </SpanBlock>
+                    <Buttons
+                        submit={this.submit}
+                        cancel={this.switch}
+                        bgColor={primaryColor}
+                        textColor={secondaryColor}
+                        submitText={submitText}
+                        roundness={roundness}
+                    />
                 </InputBox>
 
                 <Label onClick={this.switch} className="r-ie">
@@ -244,7 +118,7 @@ class InlineEditable extends React.Component {
                 { showEditIcon !== false &&
                     <span
                         className="edit-indicator"
-                        style={this.state.iconStyles}
+                        style={this.state.iconStyle}
                     >
                         <MdCreate size={14} />
                     </span>
@@ -255,27 +129,40 @@ class InlineEditable extends React.Component {
 }
 
 InlineEditable.propTypes = {
+
     /** Main value */
     value: PropTypes.string.isRequired,
+
     /** Process function when the text is submit */
     onSubmit: PropTypes.func.isRequired,
+
+    /** primary color. */
+    primaryColor: PropTypes.string,
+
+    /** secondary color. Used for the buttons' text color */
+    secondaryColor: PropTypes.string,
+
+    /** overal roundness, border-radius */
+    roundness: PropTypes.string,
+
+    /** Submit text for the input. */
+    submitText: PropTypes.string,
+
+    /** Show edit indicator when the text is hovered. */
+    showEditIcon: PropTypes.bool,
+
     /** Children component */
     children: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.string,
     ]),
-    /** primary color. */
-    primaryColor: PropTypes.string,
-    /** Submit text for the input. */
-    submitText: PropTypes.string,
-    /** Show edit indicator when the text is hovered. */
-    showEditIcon: PropTypes.bool,
 };
 
 InlineEditable.defaultProps = {
     submitText: 'apply',
     showEditIcon: true,
     primaryColor: '#555',
+    roundness: '3px',
 };
 
 export default InlineEditable;

@@ -1,4 +1,3 @@
-***
 #### Basic Usage
 ```js
 const onSubmit = value => console.log(value);
@@ -31,5 +30,3 @@ const longText = 'It works with long line of text. It works with long line of te
     </p>
 </div>
 ```
-
-***
