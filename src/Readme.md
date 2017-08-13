@@ -1,7 +1,6 @@
 ***
 #### Basic Usage
 ```js
-// const DemoContainer = require('../DemoContainer').default;
 const onSubmit = value => console.log('value');
 <div>
     <p>

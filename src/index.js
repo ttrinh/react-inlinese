@@ -5,7 +5,13 @@ import styled from 'styled-components';
 import { findParentByClass } from './helpers';
 
 
-const rounded = '3px';
+const config = {
+    minWidth: 200,
+    minHeight: 50,
+    padding: 10,
+    extraSpace: 20,
+    rounded: '3px',
+};
 
 const Container = styled.span`
     position: relative;
@@ -25,7 +31,7 @@ const InputBox = styled.span`
     overflow: hidden;
     transition: all .2s ease;
 
-    border-radius: ${rounded} ${rounded} 0 ${rounded};
+    border-radius: ${config.rounded} ${config.rounded} 0 ${config.rounded};
     height: ${props => (props.show ? 'auto' : '0')};
     opacity: ${props => (props.show ? '1' : '0')};
 
@@ -37,6 +43,7 @@ const InputBox = styled.span`
         padding: 10px;
         transition: all .1s ease;
         border: 1px solid rgba(0,0,0,.1);
+        border-radius: ${config.rounded};
         margin: 0;
         box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
     }
@@ -63,7 +70,7 @@ const Button = styled.button`
     color: white;
     padding: .25em 1.5em;
     border: 1px solid rgba(0,0,0,.05);
-    border-radius: 0 0 0 ${rounded};
+    border-radius: 0 0 0 ${config.rounded};
 
     &:hover {
         background-color: #333;
@@ -71,7 +78,7 @@ const Button = styled.button`
 `;
 
 const Cancel = styled(Button)`
-    border-radius: 0 0 ${rounded} 0;
+    border-radius: 0 0 ${config.rounded} 0;
 `;
 
 const Label = styled.span`
@@ -107,8 +114,9 @@ class InlineEditable extends React.Component {
         this.onChange = this.onChange.bind(this);
     }
 
-
-    onChange(e) { this.setState({ value: e.target.value }); }
+    onChange(e) {
+        this.setState({ value: e.target.value });
+    }
 
     onKeyDown(e) {
         if (e.keyCode === 13) this.submit(); // enter
@@ -119,12 +127,12 @@ class InlineEditable extends React.Component {
     setInputStyles(element) {
         if (this.state.show) return;
         const node = findParentByClass(element, 'r-ie');
-        const minWidth = 200;
-        const padding = 10;
-        const extraSpace = 20;
-        const w = node.offsetWidth + (padding * 2) + extraSpace;
-        const width = w < minWidth ? minWidth : w;
-        const height = node.offsetHeight + (padding * 2) + extraSpace;
+
+        // Calculate width and height
+        const w = node.offsetWidth + (config.padding * 2) + config.extraSpace;
+        const h = node.offsetHeight + (config.padding * 2) + config.extraSpace;
+        const width = w < config.minWidth ? config.minWidth : w;
+        const height = h < config.minHeight ? config.minHeight : h;
 
         this.setState({
             inputStyles: { width, height },
