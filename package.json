@@ -1,7 +1,7 @@
 {
-  "name": "giadc-ui-tablize",
+  "name": "react-inline-editable",
   "version": "0.1.0",
-  "description": "Build Table from an Array of Objects",
+  "description": "Edit text inline with a separate inline popup box",
   "main": "./dist/index.js",
   "scripts": {
     "build": "babel -d dist/ src/",
@@ -14,9 +14,11 @@
     "doc": "styleguidist server",
     "doc:build": "styleguidist build"
   },
-  "author": "Triet Trinh <ttrinh@gannett.com>",
+  "author": "Triet Trinh <briantrinh84@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "jsdom": "^11.1.0",
+    "jsdom-global": "^3.0.2",
     "react-styleguidist": "^6.0.11",
     "webpack": "^2.6.1"
   },

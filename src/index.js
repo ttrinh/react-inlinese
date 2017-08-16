@@ -63,7 +63,11 @@ class InlineEditable extends React.Component {
     hover(e) {
         const node = e.target;
         const height = node.offsetHeight;
-        if (!height) return;
+        if (!height) {
+            // assign 'inherit' for testing
+            this.setState({ iconStyle: { top: 'inherit' } });
+            return;
+        }
 
         this.setState({
             iconStyle: {
@@ -76,10 +80,15 @@ class InlineEditable extends React.Component {
         const {
             submitText, showEditIcon, children,
             primaryColor, secondaryColor, roundness,
+            value, onSubmit,
         } = this.props;
 
+        if (typeof value !== 'string' || !onSubmit) {
+            return null;
+        }
+
         return (
-            <Container onMouseEnter={this.hover}>
+            <Container>
                 <InputBox
                     show={this.state.show}
                     color={primaryColor}
@@ -111,7 +120,11 @@ class InlineEditable extends React.Component {
                     />
                 </InputBox>
 
-                <Label onClick={this.switch} className="r-ie">
+                <Label
+                    className="r-ie"
+                    onMouseEnter={this.hover}
+                    onClick={this.switch}
+                >
                     {children}
                 </Label>
 
