@@ -33,7 +33,11 @@ class InlineEditable extends React.Component {
 
     onKeyDown(e) {
         if (e.keyCode === 13 && !e.shiftKey) this.submit(); // enter
-        if (e.keyCode === 27) this.switch(); // escape
+        // escape or tab
+        if (e.keyCode === 27 || e.keyCode === 9) {
+            this.setState({ value: this.props.value }); // reset
+            this.switch();
+        }
     }
 
     // calculate the input styles.
@@ -55,19 +59,15 @@ class InlineEditable extends React.Component {
     }
 
     submit() {
-        const value = this.state.value.trim();
-        this.props.onSubmit(value);
+        this.setState({ value: this.state.value.trim() });
+        this.props.onSubmit(this.state.value);
         this.switch();
     }
 
     hover(e) {
         const node = e.target;
         const height = node.offsetHeight;
-        if (!height) {
-            // assign 'inherit' for testing
-            this.setState({ iconStyle: { top: 'inherit' } });
-            return;
-        }
+        if (!height) return;
 
         this.setState({
             iconStyle: {
@@ -88,23 +88,21 @@ class InlineEditable extends React.Component {
         }
 
         return (
-            <Container>
+            <Container tabIndex="0">
                 <InputBox
                     show={this.state.show}
                     color={primaryColor}
                     roundness={roundness}
                 >
-                    {
-                        this.state.show &&
-                        <textarea
-                            type="text"
-                            onKeyDown={this.onKeyDown}
-                            onChange={this.onChange}
-                            value={this.state.value}
-                            ref={input => input && input.focus()}
-                            style={this.state.inputStyle}
-                        />
-                    }
+                    <textarea
+                        tabIndex="-1"
+                        type="text"
+                        onKeyDown={this.onKeyDown}
+                        onChange={this.onChange}
+                        value={this.state.value}
+                        ref={input => input && input.focus()}
+                        style={this.state.inputStyle}
+                    />
 
                     <Hint color={primaryColor}>
                         <b>Enter</b>: Apply, <b>Esc</b>: Cancel
@@ -179,3 +177,13 @@ InlineEditable.defaultProps = {
 };
 
 export default InlineEditable;
+
+/**
+ * #### TODO
+ * Assign class in styles instead of props
+ * hoverStyle
+ * Autoexpand
+ * Formatter
+ * Box reaches the edge of the view
+ * Tab support
+ */

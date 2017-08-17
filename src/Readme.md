@@ -1,18 +1,16 @@
 #### Basic Usage
 ```js
-const onSubmit = value => console.log(value);
-const shortText = 'This text is editable inside italic tag';
-const longText = 'It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text.';
+const onSubmit = value => alert(value);
+const shortText = 'Editable text, Editable text, Editable text, Editable text,';
+const longText = 'It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. ';
 <div>
     <p>
-        <i>
-            <InlineEditable
-                onSubmit={onSubmit}
-                value={shortText}
-            >
-                {shortText}
-            </InlineEditable>
-        </i>
+        <InlineEditable
+            onSubmit={onSubmit}
+            value={shortText}
+        >
+            {shortText}
+        </InlineEditable>
         . diet aliquam leo, sed consequat lectus auctor et.
     </p>
     <p>
@@ -25,8 +23,7 @@ const longText = 'It works with long line of text. It works with long line of te
                 {longText}
             </InlineEditable>
         </b>
-
-        Proin id arcu accumsan, volutpat nunc quis, rhoncus diam. Ut dictum est ac elit vestibulum, posuere convallis augue iaculis. Vivamus imperdiet aliquam leo, sed consequat lectus auctor et. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Proin id arcu accumsan, volutpat nunc quis, rhoncus diam.
     </p>
 </div>
 ```

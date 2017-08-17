@@ -22,10 +22,10 @@ export const calcInputBoxStyle = (node) => {
     const minWidth = 200;
     const minHeight = 50;
     const padding = 10;
-    const extraSpace = 20;
+    const extraSpace = 10;
 
     const w = node.offsetWidth + (padding * 2) + extraSpace;
-    const h = node.offsetHeight + (padding * 2) + extraSpace;
+    const h = node.offsetHeight + (padding * 2) + (extraSpace * 2);
     const width = w < minWidth ? minWidth : w;
     const height = h < minHeight ? minHeight : h;
 
