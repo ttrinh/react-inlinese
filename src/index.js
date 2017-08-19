@@ -96,7 +96,7 @@ class InlineEditable extends React.Component {
         return (
             <Container tabIndex="0">
                 <InputBox
-                    show={this.state.show}
+                    className={this.state.show ? 'rie-show' : ''}
                     color={primaryColor}
                     roundness={roundness}
                 >
@@ -192,7 +192,6 @@ export default InlineEditable;
 
 /**
  * #### TODO
- * Assign class in styles instead of props
  * hoverStyle
  * Autoexpand
  * Formatter

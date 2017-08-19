@@ -71,6 +71,12 @@ describe('Inline Editable ', () => {
         expect(W.state().show).to.equal(true);
     });
 
+    it('it should show the input box by adding "rie-show" class', () => {
+        const W = Wrapper();
+        W.find(Label).simulate('click');
+        expect(W.find(InputBox).hasClass('rie-show')).to.equal(true);
+    });
+
     it('it should change value when type', () => {
         const W = Wrapper();
         W.setState({ show: true });

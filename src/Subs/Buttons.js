@@ -12,8 +12,8 @@ const Container = styled.span`
     color: #ccc;
 
     button {
-        background-color: ${props => props.bgColor};
         color: ${props => props.textColor};
+        background-color: ${props => props.bgColor};
         border-radius: ${props => props.roundness};
         transition: all .2s ease;
         border: 0;

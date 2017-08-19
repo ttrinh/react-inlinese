@@ -32,9 +32,9 @@ export const Container = styled.span`
 `;
 
 export const InputBox = styled.span`
-    height: ${props => (props.show ? 'auto' : '0')};
-    opacity: ${props => (props.show ? '1' : '0')};
     border-radius: ${props => props.roundness};
+    height: 0;
+    opacity: 0;
     border-bottom-right-radius: 0;
 
     z-index: 200;
@@ -62,6 +62,11 @@ export const InputBox = styled.span`
 
     textarea:focus {
         border-color: ${props => props.color};
+    }
+
+    &.rie-show {
+        height: auto;
+        opacity: 1;
     }
 `;
 
