@@ -1,3 +1,11 @@
+/**
+ * #### TODO
+ * Destroy event or disabled
+ * Autoexpand
+ * Formatter
+ * Window view limit
+ * Tab support
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import MdCreate from 'react-icons/lib/md/create';
@@ -49,6 +57,7 @@ class InlineEditable extends React.Component {
     }
 
     switch(e) {
+        if (this.props.disabled) return;
         // when the label is clicked, so it includes event info
         if (e) {
             this.setInputStyle(e.target);
@@ -84,7 +93,7 @@ class InlineEditable extends React.Component {
 
     render() {
         const {
-            value, onSubmit, submitText, cancelText,
+            value, onSubmit, disabled, submitText, cancelText,
             primaryColor, secondaryColor, roundness,
             hoverStyleString, showButtons, showEditIcon, children,
         } = this.props;
@@ -94,7 +103,7 @@ class InlineEditable extends React.Component {
         }
 
         return (
-            <Container tabIndex="0">
+            <Container tabIndex={disabled ? '' : '0'}>
                 <InputBox
                     className={this.state.show ? 'rie-show' : ''}
                     color={primaryColor}
@@ -137,12 +146,12 @@ class InlineEditable extends React.Component {
                     className="rie"
                     onMouseEnter={this.hover}
                     onClick={this.switch}
-                    hoverStyleString={hoverStyleString}
+                    hoverStyleString={disabled ? 'cursor: inherit;' : hoverStyleString}
                 >
                     {children}
                 </Label>
 
-                { showEditIcon !== false &&
+                { !disabled && showEditIcon && !this.state.show &&
                     <span
                         className="rie-edit-indicator"
                         style={this.state.iconStyle}
@@ -162,6 +171,9 @@ InlineEditable.propTypes = {
 
     /** Process function when the text is submit */
     onSubmit: PropTypes.func.isRequired,
+
+    /** Disable editable */
+    disabled: PropTypes.bool,
 
     /** primary color. */
     primaryColor: PropTypes.string,
@@ -197,20 +209,13 @@ InlineEditable.propTypes = {
 InlineEditable.defaultProps = {
     submitText: 'apply',
     cancelText: 'cancel',
+    disabled: false,
     showEditIcon: true,
     showButtons: true,
     primaryColor: '#555',
     secondaryColor: 'white',
     roundness: '3px',
-    hoverStyleString: '',
+    hoverStyleString: 'border-bottom: 1px dashed rgba(0,0,0,.2);',
 };
 
 export default InlineEditable;
-
-/**
- * #### TODO
- * Autoexpand
- * Formatter
- * Window view limit
- * Tab support
- */

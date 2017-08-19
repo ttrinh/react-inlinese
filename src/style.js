@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 export const Container = styled.span`
     position: relative;
     text-align: left;
+    cursor: inherit;
 
     box-sizing: border-box;
     * { box-sizing: border-box; }
@@ -41,8 +42,8 @@ export const InputBox = styled.span`
     border-radius: ${props => props.roundness};
     height: 0;
     opacity: 0;
-    border
-    font-size: 9px;-bottom-right-radius: 0;
+    display: none;
+    border-bottom-right-radius: 0;
 
     z-index: 200;
     position: absolute;
@@ -70,6 +71,7 @@ export const InputBox = styled.span`
 
     &.rie-show {
         height: auto;
+        display: block;
         opacity: 1;
         animation: ${elasticShow} .2s ease-in;
     }
@@ -80,7 +82,6 @@ export const Label = styled.span`
     position: relative;
 
     &:hover {
-        border-bottom: 1px dashed rgba(0,0,0,.2);
         ${props => props.hoverStyleString};
     }
 `;

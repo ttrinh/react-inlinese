@@ -16,17 +16,18 @@ const Container = styled.span`
     color: #ccc;
 
     button {
-        color: ${props => props.textColor};
-        background-color: ${props => props.bgColor};
-        border-radius: ${props => props.roundness};
+        color: white;
         transition: all .2s ease;
         border: 0;
         outline: none;
         cursor: pointer;
-        color: white;
         padding: .25em 1em;
         border: 1px solid rgba(0,0,0,.05);
         opacity: .95;
+
+        color: ${props => props.textColor};
+        background-color: ${props => props.bgColor};
+        border-radius: ${props => props.roundness};
 
         &:hover {
             opacity: 1;

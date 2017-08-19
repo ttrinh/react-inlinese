@@ -1,31 +1,91 @@
-#### Basic Usage
-```js
-const onSubmit = value => alert(value);
-const shortText = 'Editable text, Editable text, Editable text, Editable text,';
-const longText = 'It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. ';
+### Another Inline Edit
+```jsx
 <div>
     <p>
         <InlineEditable
-            onSubmit={onSubmit}
-            value={shortText}
+            onSubmit={value => alert(value)}
+            value="Editable text, Editable text, Editable text, Editable text,"
         >
-            {shortText}
+            Editable text, Editable text, Editable text, Editable text,
         </InlineEditable>
         . diet aliquam leo, sed consequat lectus auctor et.
     </p>
     <p>
         <b>
             <InlineEditable
-                onSubmit={onSubmit}
-                value={longText}
+                onSubmit={value => alert(value)}
+                value="It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. "
                 primaryColor="#E5786D"
                 submitText=""
                 cancelText=""
             >
-                {longText}
+                It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text.
             </InlineEditable>
         </b>
         Proin id arcu accumsan, volutpat nunc quis, rhoncus diam.
     </p>
 </div>
+```
+
+### Let's style it
+```jsx
+<div>
+    <p>
+        <InlineEditable
+            onSubmit={value => alert(value)}
+            value="Do you want some tacos?"
+            primaryColor="orange"
+            secondaryColor="yellow"
+            hoverStyleString="color: yellow; background-color: orange;"
+            roundness="10px"
+            submitText="Sure"
+            cancelText="No Taco"
+        >
+            Do you want some tacos?
+        </InlineEditable>
+    </p>
+</div>
+```
+
+### How about a button? And of course, I don't need the Edit Icon.
+```jsx
+<p>
+    <InlineEditable
+        onSubmit={value => alert(value)}
+        value="This is a value different from the button."
+        showEditIcon={false}
+    >
+        <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
+    </InlineEditable>
+</p>
+```
+
+
+### No buttons please
+```jsx
+<p>
+    <InlineEditable
+        onSubmit={value => alert(value)}
+        value="I am not a button fan"
+        showButtons={false}
+
+    >
+        I am not a button fan
+    </InlineEditable>
+</p>
+```
+
+### Need it to be disabled.. duh
+```jsx
+<p>
+    <InlineEditable
+        onSubmit={value => alert(value)}
+        value="we all want this"
+        showButtons={false}
+        disabled
+
+    >
+        We all want this
+    </InlineEditable>
+</p>
 ```

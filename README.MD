@@ -1,5 +1,4 @@
 DEMO & DOCUMENTATION
-https://giadc-devs.gitlab.io/giadc-ui-tablize
 
 INSTALLATION
 `yarn add `
@@ -15,4 +14,4 @@ TEST
 `yarn test:watch`
 
 BUILD DOC (Documentation page will be built after pushing)
-`yarn run doc:build`
+`yarn doc:build`

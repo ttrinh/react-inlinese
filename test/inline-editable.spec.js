@@ -138,9 +138,28 @@ describe('Inline Editable ', () => {
     });
 
     it('it should pass down hoverStyleString, default or user-define', () => {
-        expect(Wrapper().instance().props.hoverStyleString).to.equal('');
+        const def = 'border-bottom: 1px dashed rgba(0,0,0,.2);';
+        expect(Wrapper().instance().props.hoverStyleString).to.equal(def);
         const W = Wrapper({ hoverStyleString: 'color: white'}).instance();
         expect(W.props.hoverStyleString).to.equal('color: white');
+    });
+
+    it('it should, on disabled, set hoverStringStyle to "cursor: inherit;"', () => {
+        const W = Wrapper({ disabled: true }).find(Label).shallow().instance();
+        expect(W.props.hoverStyleString).to.equal('cursor: inherit;');
+    });
+
+    it('it should, on disabled, hide the edit icon indicator', () => {
+        const W = Wrapper();
+        expect(W.find('.rie-edit-indicator').length).to.equal(1);
+        const W2 = Wrapper({ disabled: true });
+        expect(W2.find('.rie-edit-indicator').length).to.equal(0);
+    });
+
+    it('it should, on disabled, not switch to the input box', () => {
+        const W = Wrapper({ disabled: true });
+        W.find(Label).simulate('click');
+        expect(W.state().show).to.equal(false);
     });
 
 });
@@ -157,7 +176,7 @@ describe('Box Helpers: calcInputBoxStyle', () => {
     });
 
     it('should apply minWidth and minHeight', () => {
-        const expected = { width: 200, height: 50 };
+        const expected = { width: 300, height: 50 };
         expect(calcInputBoxStyle(node())).to.eql(expected);
     })
 

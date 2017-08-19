@@ -23,7 +23,7 @@ export const findParentByClass = (element, className) => (
 const defaultConfig = {
     padding: 10,
     extraSpace: 10,
-    minWidth: 200,
+    minWidth: 300,
     minHeight: 50,
 };
 export const calcInputBoxStyle = (node, config = defaultConfig) => {
