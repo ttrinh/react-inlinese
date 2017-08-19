@@ -8,7 +8,7 @@ export const Container = styled.span`
     box-sizing: border-box;
     * { box-sizing: border-box; }
 
-    .edit-indicator {
+    .rie-edit-indicator {
         position: absolute;
         background-color: white;
         top: -5px;
@@ -25,7 +25,7 @@ export const Container = styled.span`
         opacity: 0;
     }
 
-    &:hover .edit-indicator {
+    &:hover .rie-edit-indicator {
         right: -26px;
         opacity: 1;
     }
@@ -48,7 +48,6 @@ export const InputBox = styled.span`
     position: absolute;
     top: -10px;
     left: -10px;
-    overflow: hidden;
 
     textarea {
         border-radius: ${props => props.roundness};
@@ -91,7 +90,7 @@ export const Hint = styled.span`
     position: absolute;
     user-select: none;
     left: 0;
-    bottom: 25px;
+    bottom: 0px;
     padding: .5em 1em;
     opacity: .4;
     font: bold 8px Arial, sans-serif;

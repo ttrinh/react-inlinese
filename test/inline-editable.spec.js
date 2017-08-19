@@ -47,16 +47,27 @@ describe('Inline Editable ', () => {
         expect(Wrapper().state().value).to.equal('basic text');
     });
 
-    it('it should render the children in Label, and add "r-ie" class.', () => {
+    it('it should render the children in Label, and add "rie" class.', () => {
         const childrenBox = Wrapper().find(Label);
         expect(childrenBox).to.have.length(1);
-        expect(childrenBox.hasClass('r-ie')).to.equal(true);
+        expect(childrenBox.hasClass('rie')).to.equal(true);
         expect(childrenBox.containsMatchingElement('test')).to.equal(true);
     });
 
     it('it should not render Edit Icon when showEditIcon disabled', () => {
+        expect(Wrapper().find('.rie-edit-indicator')).to.have.length(1);
         const NoEditIcon = Wrapper({ showEditIcon: false });
-        expect(NoEditIcon.find('.edit-indicator')).to.have.length(0);
+        expect(NoEditIcon.find('.rie-edit-indicator')).to.have.length(0);
+    });
+
+    it('it should not render Buttons when showButtons set to false', () => {
+        const W = Wrapper();
+        W.setState({ show: true });
+        expect(W.find(Buttons)).to.have.length(1);
+
+        const NoButtons = Wrapper({ showButtons: false });
+        NoButtons.setState({ show: true });
+        expect(NoButtons.find(Buttons)).to.have.length(0);
     });
 
     it('it should calculate icon top position when text is hovered ', () => {

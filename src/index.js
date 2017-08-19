@@ -42,7 +42,7 @@ class InlineEditable extends React.Component {
     // calculate the input styles.
     setInputStyle(element) {
         if (this.state.show) return;
-        const node = findParentByClass(element, 'r-ie');
+        const node = findParentByClass(element, 'rie');
         this.setState({
             inputStyle: calcInputBoxStyle(node),
         });
@@ -86,7 +86,7 @@ class InlineEditable extends React.Component {
         const {
             submitText, showEditIcon, children,
             primaryColor, secondaryColor, roundness,
-            value, onSubmit, cancelText,
+            value, onSubmit, cancelText, showButtons,
         } = this.props;
 
         if (typeof value !== 'string' || !onSubmit) {
@@ -100,7 +100,8 @@ class InlineEditable extends React.Component {
                     color={primaryColor}
                     roundness={roundness}
                 >
-                    { this.state.show &&
+                    {
+                        this.state.show &&
                         <textarea
                             tabIndex="-1"
                             type="text"
@@ -113,30 +114,27 @@ class InlineEditable extends React.Component {
                     }
 
                     <Hint color={primaryColor}>
-                        <span>
-                            <b>Enter</b>Apply
-                        </span>
-                        <span>
-                            <b>Esc</b>Cancel
-                        </span>
-                        <span>
-                            <b>Shift+Enter</b>New Line
-                        </span>
+                        <span><b>Enter</b>Apply</span>
+                        <span><b>Esc</b>Cancel</span>
+                        <span><b>Shift+Enter</b>New Line</span>
                     </Hint>
 
-                    <Buttons
-                        submit={this.submit}
-                        cancel={this.switch}
-                        bgColor={primaryColor}
-                        textColor={secondaryColor}
-                        submitText={submitText}
-                        cancelText={cancelText}
-                        roundness={roundness}
-                    />
+                    {
+                        showButtons &&
+                        <Buttons
+                            submit={this.submit}
+                            cancel={this.switch}
+                            bgColor={primaryColor}
+                            textColor={secondaryColor}
+                            submitText={submitText}
+                            cancelText={cancelText}
+                            roundness={roundness}
+                        />
+                    }
                 </InputBox>
 
                 <Label
-                    className="r-ie"
+                    className="rie"
                     onMouseEnter={this.hover}
                     onClick={this.switch}
                 >
@@ -145,7 +143,7 @@ class InlineEditable extends React.Component {
 
                 { showEditIcon !== false &&
                     <span
-                        className="edit-indicator"
+                        className="rie-edit-indicator"
                         style={this.state.iconStyle}
                     >
                         <MdCreate size={14} />
@@ -182,6 +180,9 @@ InlineEditable.propTypes = {
     /** Show edit indicator when the text is hovered. */
     showEditIcon: PropTypes.bool,
 
+    /** Show Input Box buttons */
+    showButtons: PropTypes.bool,
+
     /** Children component */
     children: PropTypes.oneOfType([
         PropTypes.element,
@@ -193,6 +194,7 @@ InlineEditable.defaultProps = {
     submitText: 'apply',
     cancelText: 'cancel',
     showEditIcon: true,
+    showButtons: true,
     primaryColor: '#555',
     secondaryColor: 'white',
     roundness: '3px',
