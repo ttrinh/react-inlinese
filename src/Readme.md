@@ -19,6 +19,8 @@ const longText = 'It works with long line of text. It works with long line of te
                 onSubmit={onSubmit}
                 value={longText}
                 primaryColor="#E5786D"
+                submitText=""
+                cancelText=""
             >
                 {longText}
             </InlineEditable>

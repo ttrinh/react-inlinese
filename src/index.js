@@ -9,7 +9,6 @@ import { Container, InputBox, Label, Hint } from './style';
 
 /**
  * React component for editing text inline.
- * > * Note: Only support value as **string**
  */
 class InlineEditable extends React.Component {
     constructor(props) {
@@ -55,10 +54,17 @@ class InlineEditable extends React.Component {
             this.setInputStyle(e.target);
             this.setState({ value: this.props.value });
         }
+
         this.setState({ show: !this.state.show });
     }
 
     submit() {
+        // no change
+        if (this.state.value === this.props.value) {
+            this.switch();
+            return;
+        }
+
         this.setState({ value: this.state.value.trim() });
         this.props.onSubmit(this.state.value);
         this.switch();
@@ -80,7 +86,7 @@ class InlineEditable extends React.Component {
         const {
             submitText, showEditIcon, children,
             primaryColor, secondaryColor, roundness,
-            value, onSubmit,
+            value, onSubmit, cancelText,
         } = this.props;
 
         if (typeof value !== 'string' || !onSubmit) {
@@ -114,6 +120,7 @@ class InlineEditable extends React.Component {
                         bgColor={primaryColor}
                         textColor={secondaryColor}
                         submitText={submitText}
+                        cancelText={cancelText}
                         roundness={roundness}
                     />
                 </InputBox>
@@ -159,6 +166,9 @@ InlineEditable.propTypes = {
     /** Submit text for the input. */
     submitText: PropTypes.string,
 
+    /** Cancel text for the input. */
+    cancelText: PropTypes.string,
+
     /** Show edit indicator when the text is hovered. */
     showEditIcon: PropTypes.bool,
 
@@ -171,8 +181,10 @@ InlineEditable.propTypes = {
 
 InlineEditable.defaultProps = {
     submitText: 'apply',
+    cancelText: 'cancel',
     showEditIcon: true,
     primaryColor: '#555',
+    secondaryColor: 'white',
     roundness: '3px',
 };
 

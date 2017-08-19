@@ -47,6 +47,7 @@ const Buttons = ({
     submit,
     cancel,
     submitText,
+    cancelText,
     bgColor,
     textColor,
     roundness,
@@ -60,7 +61,7 @@ const Buttons = ({
             <MdCheck size={16} /> {submitText}
         </button>
         <button className="cancel" onClick={cancel} >
-            <MdClear size={16} /> cancel
+            <MdClear size={16} /> {cancelText}
         </button>
     </Container>
 );
@@ -72,10 +73,13 @@ Buttons.propTypes = {
     textColor: PropTypes.string,
     roundness: PropTypes.string,
     submitText: PropTypes.string,
+    cancelText: PropTypes.string,
 };
 
 Buttons.defaultProps = {
     submitText: 'submit',
+    cancelText: 'cancel',
+    cancel: 'cancel',
     bgColor: '#555',
     textColor: 'white',
     roundness: '3px',

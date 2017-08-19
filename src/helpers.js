@@ -11,21 +11,32 @@ export const findParentByClass = (element, className) => (
     : element.parentNode && findParentByClass(element.parentNode, className)
 );
 
+
 /**
 * Calculate width and height of the input box
 * based on width and height of the label text
 *
-* @param {Node} node     the text label element
-* @return {Objet}
+* @param {Node}     node        the text label element
+* @param {Object}   config      { padding, extraSpace, minWidth, minHeight }
+* @return {Object}              { width, height }
 **/
-export const calcInputBoxStyle = (node) => {
-    const minWidth = 200;
-    const minHeight = 50;
-    const padding = 10;
-    const extraSpace = 10;
+const defaultConfig = {
+    padding: 10,
+    extraSpace: 10,
+    minWidth: 200,
+    minHeight: 50,
+};
+export const calcInputBoxStyle = (node, config = defaultConfig) => {
+    const { padding, extraSpace, minWidth, minHeight } = config;
 
-    const w = node.offsetWidth + (padding * 2) + extraSpace;
-    const h = node.offsetHeight + (padding * 2) + (extraSpace * 2);
+    // The box should includes side paddings and extra space
+    // vertical bottom padding should extend because the buttons & descriptions
+    const sidePadding = padding * 2;
+    const verticalExtra = extraSpace * 2;
+    const w = node.offsetWidth + sidePadding + extraSpace;
+    const h = node.offsetHeight + sidePadding + verticalExtra;
+
+    // compare it against minimum values
     const width = w < minWidth ? minWidth : w;
     const height = h < minHeight ? minHeight : h;
 

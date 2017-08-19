@@ -1,9 +1,11 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { expect, assert } from 'chai';
 
+import Buttons from '../src/Subs/Buttons';
 import InlineEditable from '../src/index';
 import { Container, InputBox, Label, Hint } from '../src/style';
+import { calcInputBoxStyle, findParentByClass } from '../src/helpers';
 
 
 // generate fake key event
@@ -18,20 +20,18 @@ const pressKeyEvent = (keyCode) => ({
     },
 });
 
+const noop = () => {};
+
 describe('Inline Editable ', () => {
-    const Wrapper = (props) => shallow(
-        <InlineEditable
-            value="basic text"
-            onSubmit={() => {}}
-            {...props}
-        >
-            test
+    const Wrapper = (props, children = 'test') => shallow(
+        <InlineEditable value="basic text" onSubmit={noop} {...props}>
+            {children}
         </InlineEditable>
     );
 
     it('it should not render without value and onSubmit', () => {
         const wrapper = shallow(<InlineEditable />);
-        const wrapperNoValue = shallow(<InlineEditable onSubmit={() => {}} />);
+        const wrapperNoValue = shallow(<InlineEditable onSubmit={noop} />);
         const wrapperNoSubmit = shallow(<InlineEditable value="one" />);
 
         expect(wrapper.children()).to.have.length(0);
@@ -115,6 +115,73 @@ describe('Inline Editable ', () => {
         Textarea.simulate('change', { target: { value: '   hello friends    ' } });
         Textarea.simulate('keyDown', pressKeyEvent(13));
         expect(W.state().value).to.equal('hello friends');
+    });
+
+});
+
+
+describe('Box Helpers: calcInputBoxStyle', () => {
+    const node = (w, h) => ({
+        offsetWidth: w || 10,
+        offsetHeight: h || 10,
+    });
+
+    it('should return object', () => {
+        assert.isObject(calcInputBoxStyle(node()));
+    });
+
+    it('should apply minWidth and minHeight', () => {
+        const expected = { width: 200, height: 50 };
+        expect(calcInputBoxStyle(node())).to.eql(expected);
+    })
+
+    it('should calculate width and height', () => {
+        const newNode = node(300, 50);
+        const expected = { width: 330, height: 90 };
+        expect(calcInputBoxStyle(newNode)).to.eql(expected);
+    })
+
+    it('should calculate with a defined config', () => {
+        const newNode = node(300, 50);
+        const expected = { width: 390, height: 190 };
+        const config = {
+            padding: 20,
+            extraSpace: 50,
+            minWidth: 200,
+            minHeight: 50,
+        };
+        expect(calcInputBoxStyle(newNode, config)).to.eql(expected);
+    })
+});
+
+
+describe('Buttons', () => {
+    const buttons = props => shallow(
+        <Buttons submit={noop} cancel={noop} {...props}/>
+    );
+
+    it('should render default values', () => {
+        const B = buttons();
+        expect(B.props().bgColor).to.equal('#555');
+        expect(B.props().textColor).to.equal('white');
+        expect(B.props().roundness).to.equal('3px');
+        expect(B.containsMatchingElement('submit')).to.equal(true);
+        expect(B.containsMatchingElement('cancel')).to.equal(true);
+    });
+
+    it('should render defined values', () => {
+        const B = buttons({
+            submitText: 'Taco',
+            cancelText: 'Kitty',
+            bgColor: 'yellow',
+            textColor: 'red',
+            roundness: '0'
+        });
+        expect(B.props().bgColor).to.equal('yellow');
+        expect(B.props().textColor).to.equal('red');
+        expect(B.props().roundness).to.equal('0');
+        expect(B.containsMatchingElement('Taco')).to.equal(true);
+        expect(B.containsMatchingElement('Kitty')).to.equal(true);
     });
 
 });
