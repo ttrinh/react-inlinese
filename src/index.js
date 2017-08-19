@@ -100,18 +100,28 @@ class InlineEditable extends React.Component {
                     color={primaryColor}
                     roundness={roundness}
                 >
-                    <textarea
-                        tabIndex="-1"
-                        type="text"
-                        onKeyDown={this.onKeyDown}
-                        onChange={this.onChange}
-                        value={this.state.value}
-                        ref={input => input && input.focus()}
-                        style={this.state.inputStyle}
-                    />
+                    { this.state.show &&
+                        <textarea
+                            tabIndex="-1"
+                            type="text"
+                            onKeyDown={this.onKeyDown}
+                            onChange={this.onChange}
+                            value={this.state.value}
+                            ref={input => input && input.focus()}
+                            style={this.state.inputStyle}
+                        />
+                    }
 
                     <Hint color={primaryColor}>
-                        <b>Enter</b>: Apply, <b>Esc</b>: Cancel
+                        <span>
+                            <b>Enter</b>Apply
+                        </span>
+                        <span>
+                            <b>Esc</b>Cancel
+                        </span>
+                        <span>
+                            <b>Shift+Enter</b>New Line
+                        </span>
                     </Hint>
 
                     <Buttons

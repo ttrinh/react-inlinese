@@ -8,7 +8,7 @@ import MdClear from 'react-icons/lib/md/clear';
 const Container = styled.span`
     display: block;;
     text-align: right;
-    background-color: white;
+    background-color: rgba(255,255,255,.95);
     color: #ccc;
 
     button {
@@ -22,7 +22,7 @@ const Container = styled.span`
         color: white;
         padding: .25em 1em;
         border: 1px solid rgba(0,0,0,.05);
-        opacity: .85;
+        opacity: .95;
 
         &:hover {
             opacity: 1;

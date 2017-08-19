@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 
 export const Container = styled.span`
@@ -31,19 +31,24 @@ export const Container = styled.span`
     }
 `;
 
+const elasticShow = keyframes`
+    from { opacity: 0;  transform: scale(1, .7);  height: 0px;}
+    60% { opacity: .3; transform: scale(1, 1.1); height: auto;}
+    100% { opacity: 1; transform: scale(1, 1); }
+`;
+
 export const InputBox = styled.span`
     border-radius: ${props => props.roundness};
     height: 0;
     opacity: 0;
-    border-bottom-right-radius: 0;
+    border
+    font-size: 9px;-bottom-right-radius: 0;
 
     z-index: 200;
     position: absolute;
     top: -10px;
     left: -10px;
     overflow: hidden;
-    transition: all .2s ease;
-    background-color: white;
 
     textarea {
         border-radius: ${props => props.roundness};
@@ -67,6 +72,7 @@ export const InputBox = styled.span`
     &.rie-show {
         height: auto;
         opacity: 1;
+        animation: ${elasticShow} .2s ease-in;
     }
 `;
 
@@ -88,6 +94,19 @@ export const Hint = styled.span`
     bottom: 25px;
     padding: .5em 1em;
     opacity: .4;
-    font: normal 11px Arial, sans-serif;
+    font: bold 8px Arial, sans-serif;
+    text-transform: uppercase;
     letter-spacing: -.25px;
+
+    span {
+        margin-right: 5px;
+    }
+
+    b {
+        display: inline-block;
+        padding: 2px 3px;
+        margin-right: 2px;
+        border-radius: 3px;
+        border: 1px solid rgba(0,0,0,.2);
+    }
 `;

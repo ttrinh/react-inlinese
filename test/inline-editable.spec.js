@@ -98,9 +98,9 @@ describe('Inline Editable ', () => {
 
     it('it should reset value on Esc or Tab', () => {
         const W = Wrapper();
+        W.setState({ show: true });
         const Textarea = W.find('textarea');
 
-        W.setState({ show: true });
         Textarea.simulate('change', { target: { value: 'hello friends' } });
         Textarea.simulate('keyDown', pressKeyEvent(27));
         expect(W.state().value).to.equal('basic text');
