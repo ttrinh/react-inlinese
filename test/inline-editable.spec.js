@@ -20,7 +20,10 @@ const pressKeyEvent = (keyCode) => ({
     },
 });
 
+
+// no operation
 const noop = () => {};
+
 
 describe('Inline Editable ', () => {
     const Wrapper = (props, children = 'test') => shallow(
@@ -132,6 +135,12 @@ describe('Inline Editable ', () => {
         Textarea.simulate('change', { target: { value: '   hello friends    ' } });
         Textarea.simulate('keyDown', pressKeyEvent(13));
         expect(W.state().value).to.equal('hello friends');
+    });
+
+    it('it should pass down hoverStyleString, default or user-define', () => {
+        expect(Wrapper().instance().props.hoverStyleString).to.equal('');
+        const W = Wrapper({ hoverStyleString: 'color: white'}).instance();
+        expect(W.props.hoverStyleString).to.equal('color: white');
     });
 
 });

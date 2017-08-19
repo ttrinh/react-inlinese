@@ -84,9 +84,9 @@ class InlineEditable extends React.Component {
 
     render() {
         const {
-            submitText, showEditIcon, children,
+            value, onSubmit, submitText, cancelText,
             primaryColor, secondaryColor, roundness,
-            value, onSubmit, cancelText, showButtons,
+            hoverStyleString, showButtons, showEditIcon, children,
         } = this.props;
 
         if (typeof value !== 'string' || !onSubmit) {
@@ -137,6 +137,7 @@ class InlineEditable extends React.Component {
                     className="rie"
                     onMouseEnter={this.hover}
                     onClick={this.switch}
+                    hoverStyleString={hoverStyleString}
                 >
                     {children}
                 </Label>
@@ -177,11 +178,14 @@ InlineEditable.propTypes = {
     /** Cancel text for the input. */
     cancelText: PropTypes.string,
 
-    /** Show edit indicator when the text is hovered. */
+    /** Show edit indicator when the text is hovered. It's useful when the children element is a button or icon */
     showEditIcon: PropTypes.bool,
 
     /** Show Input Box buttons */
     showButtons: PropTypes.bool,
+
+    /** STRING: Hover style */
+    hoverStyleString: PropTypes.string,
 
     /** Children component */
     children: PropTypes.oneOfType([
@@ -198,15 +202,15 @@ InlineEditable.defaultProps = {
     primaryColor: '#555',
     secondaryColor: 'white',
     roundness: '3px',
+    hoverStyleString: '',
 };
 
 export default InlineEditable;
 
 /**
  * #### TODO
- * hoverStyle
  * Autoexpand
  * Formatter
- * Box reaches the edge of the view
+ * Window view limit
  * Tab support
  */

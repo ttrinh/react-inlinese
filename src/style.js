@@ -81,6 +81,7 @@ export const Label = styled.span`
 
     &:hover {
         border-bottom: 1px dashed rgba(0,0,0,.2);
+        ${props => props.hoverStyleString};
     }
 `;
 
