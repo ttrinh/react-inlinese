@@ -47,7 +47,7 @@
 </div>
 ```
 
-### How about a button? And of course, I don't need the Edit Icon.
+### How about a button? And of course, No Edit Icon needed.
 ```jsx
 <p>
     <InlineEditable
@@ -56,6 +56,14 @@
         showEditIcon={false}
     >
         <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
+    </InlineEditable>
+    <InlineEditable
+        onSubmit={value => alert(value)}
+        value=""
+        showEditIcon={false}
+        placeholder="Enter your value"
+    >
+        <button style={{ cursor: 'pointer' }}>PLACEHOLDER</button>
     </InlineEditable>
 </p>
 ```
@@ -75,7 +83,7 @@
 </p>
 ```
 
-### Need it to be disabled.. duh
+### Need it disabled.. duh
 ```jsx
 <p>
     <InlineEditable

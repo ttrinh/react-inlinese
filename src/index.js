@@ -1,6 +1,5 @@
 /**
  * #### TODO
- * Destroy event or disabled
  * Autoexpand
  * Formatter
  * Window view limit
@@ -94,7 +93,7 @@ class InlineEditable extends React.Component {
     render() {
         const {
             value, onSubmit, disabled, submitText, cancelText,
-            primaryColor, secondaryColor, roundness,
+            placeholder, primaryColor, secondaryColor, roundness,
             hoverStyleString, showButtons, showEditIcon, children,
         } = this.props;
 
@@ -114,6 +113,7 @@ class InlineEditable extends React.Component {
                         <textarea
                             tabIndex="-1"
                             type="text"
+                            placeholder={placeholder}
                             onKeyDown={this.onKeyDown}
                             onChange={this.onChange}
                             value={this.state.value}
@@ -172,16 +172,19 @@ InlineEditable.propTypes = {
     /** Process function when the text is submit */
     onSubmit: PropTypes.func.isRequired,
 
+    /** Placeholder */
+    placeholder: PropTypes.string,
+
     /** Disable editable */
     disabled: PropTypes.bool,
 
-    /** primary color. */
+    /** Primary color. */
     primaryColor: PropTypes.string,
 
-    /** secondary color. Used for the buttons' text color */
+    /** Secondary color. Used for the buttons' text color */
     secondaryColor: PropTypes.string,
 
-    /** overal roundness, border-radius */
+    /** Overall roundness, border-radius */
     roundness: PropTypes.string,
 
     /** Submit text for the input. */
@@ -199,7 +202,7 @@ InlineEditable.propTypes = {
     /** STRING: Hover style */
     hoverStyleString: PropTypes.string,
 
-    /** Children component */
+    /** Representational display String or Component */
     children: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.string,
@@ -209,6 +212,7 @@ InlineEditable.propTypes = {
 InlineEditable.defaultProps = {
     submitText: 'apply',
     cancelText: 'cancel',
+    placeholder: '',
     disabled: false,
     showEditIcon: true,
     showButtons: true,

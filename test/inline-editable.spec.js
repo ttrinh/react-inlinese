@@ -144,6 +144,12 @@ describe('Inline Editable ', () => {
         expect(W.props.hoverStyleString).to.equal('color: white');
     });
 
+    it('it should pass down placeholder, default or user-define', () => {
+        expect(Wrapper().instance().props.placeholder).to.equal('');
+        const W = Wrapper({ placeholder: 'hello' }).instance();
+        expect(W.props.placeholder).to.equal('hello');
+    });
+
     it('it should, on disabled, set hoverStringStyle to "cursor: inherit;"', () => {
         const W = Wrapper({ disabled: true }).find(Label).shallow().instance();
         expect(W.props.hoverStyleString).to.equal('cursor: inherit;');
