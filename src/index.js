@@ -6,6 +6,7 @@
  * Tab support
  */
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import MdCreate from 'react-icons/lib/md/create';
 
@@ -26,11 +27,17 @@ class InlineEditable extends React.Component {
             inputStyle: {},
             iconStyle: {},
         };
+
         this.switch = this.switch.bind(this);
         this.submit = this.submit.bind(this);
         this.hover = this.hover.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.clickOutside = this.clickOutside.bind(this);
+    }
+
+    componentDidMount() {
+        this.node = findDOMNode(this);
     }
 
     onChange(e) {
@@ -57,13 +64,29 @@ class InlineEditable extends React.Component {
 
     switch(e) {
         if (this.props.disabled) return;
-        // when the label is clicked, so it includes event info
-        if (e) {
-            this.setInputStyle(e.target);
-            this.setState({ value: this.props.value });
+
+        // Entering edit mode.
+        // Add dom listener for click outside
+        // Calculate Input Box style and set value
+        if (!this.state.show) {
+            document.addEventListener('click', this.clickOutside, false);
+
+            if (e) {
+                this.setInputStyle(e.target);
+                this.setState({ value: this.props.value });
+            }
+
+        // Not in edit mode. Remove the listener
+        } else {
+            document.removeEventListener('click', this.clickOutside, false);
         }
 
         this.setState({ show: !this.state.show });
+    }
+
+    clickOutside(e) {
+        if (this.node.contains(e.target)) return;
+        this.switch();
     }
 
     submit() {
@@ -144,18 +167,16 @@ class InlineEditable extends React.Component {
 
                 <Label
                     className="rie"
-                    onMouseEnter={this.hover}
                     onClick={this.switch}
+                    onMouseEnter={this.hover}
                     hoverStyleString={disabled ? 'cursor: inherit;' : hoverStyleString}
                 >
                     {children}
                 </Label>
 
-                { !disabled && showEditIcon && !this.state.show &&
-                    <span
-                        className="rie-edit-indicator"
-                        style={this.state.iconStyle}
-                    >
+                {
+                    !disabled && showEditIcon && !this.state.show &&
+                    <span className="rie-edit-indicator" style={this.state.iconStyle}>
                         <MdCreate size={14} />
                     </span>
                 }
