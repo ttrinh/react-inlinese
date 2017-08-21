@@ -80,13 +80,14 @@ const formatMyText = (value) => {
 </p>
 ```
 
-### How about a button? And of course, No Edit Icon needed.
+### How about button or else?
 ```jsx
 <p>
     <InlineEditable
         onSubmit={value => alert(value)}
         value="This is a value different from the button."
         showEditIcon={false}
+        hoverStyleString=""
     >
         <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
     </InlineEditable>
@@ -94,9 +95,10 @@ const formatMyText = (value) => {
         onSubmit={value => alert(value)}
         value=""
         showEditIcon={false}
-        placeholder="Enter your value"
+        hoverStyleString=""
+        placeholder="What's my name?"
     >
-        <button style={{ cursor: 'pointer' }}>PLACEHOLDER</button>
+        <img src="http://www.doppelme.com/images/examples/fade2.gif" />
     </InlineEditable>
 </p>
 ```
@@ -134,4 +136,3 @@ const formatMyText = (value) => {
 ### POSSIBLE FEATURES
 * Autoexpand
 * Window view determines Input Box dimension
-* Tab support

@@ -10,6 +10,14 @@ import { Container, InputBox, Label, Hint } from './style';
 
 /**
  * React component for editing text inline.
+ *
+ * ###### Features
+ * - Simple & clean.
+ * - No interference on the current textflow.
+ * - Keyboard & Tab friendly (tab around and see).
+ * - Simple theme customization.
+ * - Format-able text input.
+ * - Support presentational element as String or Component. However, value must be string.
  */
 class InlineEditable extends React.Component {
     constructor(props) {
@@ -132,7 +140,25 @@ class InlineEditable extends React.Component {
         }
 
         return (
-            <Container tabIndex={disabled ? '' : '0'}>
+            <Container>
+                <Label
+                    className="rie"
+                    onClick={this.switch}
+                    tabIndex={disabled ? '' : '0'}
+                    onFocus={this.switch}
+                    onMouseEnter={this.hover}
+                    hoverStyleString={disabled ? 'cursor: inherit;' : hoverStyleString}
+                >
+                    {children}
+                </Label>
+
+                {
+                    !disabled && showEditIcon && !this.state.show &&
+                    <span className="rie-edit-indicator" style={this.state.iconStyle}>
+                        <MdCreate size={14} />
+                    </span>
+                }
+
                 <InputBox
                     className={this.state.show ? 'rie-show' : ''}
                     color={primaryColor}
@@ -172,21 +198,7 @@ class InlineEditable extends React.Component {
                     }
                 </InputBox>
 
-                <Label
-                    className="rie"
-                    onClick={this.switch}
-                    onMouseEnter={this.hover}
-                    hoverStyleString={disabled ? 'cursor: inherit;' : hoverStyleString}
-                >
-                    {children}
-                </Label>
 
-                {
-                    !disabled && showEditIcon && !this.state.show &&
-                    <span className="rie-edit-indicator" style={this.state.iconStyle}>
-                        <MdCreate size={14} />
-                    </span>
-                }
             </Container>
         );
     }

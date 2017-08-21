@@ -85,6 +85,12 @@ describe('Inline Editable ', () => {
         expect(W.state().show).to.equal(true);
     });
 
+    it('it should change state.show to show input box when the text is focused ', () => {
+        const W = Wrapper();
+        W.find(Label).simulate('focus');
+        expect(W.state().show).to.equal(true);
+    });
+
     it('it should show the input box by adding "rie-show" class', () => {
         const W = Wrapper();
         W.find(Label).simulate('click');
