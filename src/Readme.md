@@ -1,18 +1,18 @@
-### Another Inline Edit
+### Another Inline Edit.. Jeez
 ```jsx
 <div>
     <p>
-        <InlineEditable
+        <ReactInlinese
             onSubmit={value => alert(value)}
             value="Editable text, Editable text, Editable text, Editable text,"
         >
             Editable text, Editable text, Editable text, Editable text,
-        </InlineEditable>
+        </ReactInlinese>
         . diet aliquam leo, sed consequat lectus auctor et.
     </p>
     <p>
         <b>
-            <InlineEditable
+            <ReactInlinese
                 onSubmit={value => alert(value)}
                 value="It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. "
                 primaryColor="#E5786D"
@@ -20,7 +20,7 @@
                 cancelText=""
             >
                 It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text.
-            </InlineEditable>
+            </ReactInlinese>
         </b>
         Proin id arcu accumsan, volutpat nunc quis, rhoncus diam.
     </p>
@@ -30,7 +30,7 @@
 ### Let's style it
 ```jsx
 <p>
-    <InlineEditable
+    <ReactInlinese
         onSubmit={value => alert(value)}
         value="Do you want some tacos?"
         primaryColor="orange"
@@ -41,7 +41,7 @@
         cancelText="No Taco"
     >
         Do you want some tacos?
-    </InlineEditable>
+    </ReactInlinese>
 </p>
 ```
 
@@ -57,11 +57,11 @@ const formatMyText = (value) => {
 * Formatter:Function
 * Passed down argument: value
 * Must return a string
-* This is where the input can be manipulated
+* This is where the input can be manipulated, formatted, and limited..
 
 ```jsx
 <p>
-    <InlineEditable
+    <ReactInlinese
         onSubmit={value => alert(value)}
         value="this formatter doesn't accept dollar sign"
         roundness="0px"
@@ -76,22 +76,22 @@ const formatMyText = (value) => {
         }
     >
         this formatter doesn't accept dollar sign
-    </InlineEditable>
+    </ReactInlinese>
 </p>
 ```
 
 ### How about button or else?
 ```jsx
 <p>
-    <InlineEditable
+    <ReactInlinese
         onSubmit={value => alert(value)}
         value="This is a value different from the button."
         showEditIcon={false}
         hoverStyleString=""
     >
         <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
-    </InlineEditable>
-    <InlineEditable
+    </ReactInlinese>
+    <ReactInlinese
         onSubmit={value => alert(value)}
         value=""
         showEditIcon={false}
@@ -99,7 +99,7 @@ const formatMyText = (value) => {
         placeholder="What's my name?"
     >
         <img src="http://www.doppelme.com/images/examples/fade2.gif" />
-    </InlineEditable>
+    </ReactInlinese>
 </p>
 ```
 
@@ -107,21 +107,21 @@ const formatMyText = (value) => {
 ### No buttons please
 ```jsx
 <p>
-    <InlineEditable
+    <ReactInlinese
         onSubmit={value => alert(value)}
         value="I am not a button fan"
         showButtons={false}
 
     >
         I am not a button fan
-    </InlineEditable>
+    </ReactInlinese>
 </p>
 ```
 
 ### Need it disabled.. duh
 ```jsx
 <p>
-    <InlineEditable
+    <ReactInlinese
         onSubmit={value => alert(value)}
         value="we all want this"
         showButtons={false}
@@ -129,7 +129,7 @@ const formatMyText = (value) => {
 
     >
         We all want this
-    </InlineEditable>
+    </ReactInlinese>
 </p>
 ```
 

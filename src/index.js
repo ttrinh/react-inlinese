@@ -19,7 +19,7 @@ import { Container, InputBox, Label, Hint } from './style';
  * - Format-able text input.
  * - Support presentational element as String or Component. However, value must be string.
  */
-class InlineEditable extends React.Component {
+class ReactInlinese extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,7 +48,7 @@ class InlineEditable extends React.Component {
             const formattedValue = this.props.formatter.call(null, value);
 
             if (typeof formattedValue !== 'string') {
-                console.warn('InlineEditable: formatter function must return a string value');
+                console.warn('ReactInlinese: formatter function must return a string value');
                 return;
             }
 
@@ -204,7 +204,7 @@ class InlineEditable extends React.Component {
     }
 }
 
-InlineEditable.propTypes = {
+ReactInlinese.propTypes = {
 
     /** Main value */
     value: PropTypes.string.isRequired,
@@ -252,7 +252,7 @@ InlineEditable.propTypes = {
     ]),
 };
 
-InlineEditable.defaultProps = {
+ReactInlinese.defaultProps = {
     submitText: 'apply',
     cancelText: 'cancel',
     placeholder: '',
@@ -265,4 +265,4 @@ InlineEditable.defaultProps = {
     hoverStyleString: 'border-bottom: 1px dashed rgba(0,0,0,.2);',
 };
 
-export default InlineEditable;
+export default ReactInlinese;
