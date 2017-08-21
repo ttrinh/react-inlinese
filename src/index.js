@@ -1,10 +1,3 @@
-/**
- * #### TODO
- * Autoexpand
- * Formatter
- * Window view limit
- * Tab support
- */
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
@@ -41,7 +34,21 @@ class InlineEditable extends React.Component {
     }
 
     onChange(e) {
-        this.setState({ value: e.target.value });
+        const value = e.target.value;
+
+        if (this.props.formatter) {
+            const formattedValue = this.props.formatter.call(null, value);
+
+            if (typeof formattedValue !== 'string') {
+                console.warn('InlineEditable: formatter function must return a string value');
+                return;
+            }
+
+            this.setState({ value: formattedValue });
+            return;
+        }
+
+        this.setState({ value });
     }
 
     onKeyDown(e) {
@@ -198,6 +205,9 @@ InlineEditable.propTypes = {
 
     /** Disable editable */
     disabled: PropTypes.bool,
+
+    /** Formatter. Acticate on value changed and pass down value as argument */
+    formatter: PropTypes.func,
 
     /** Primary color. */
     primaryColor: PropTypes.string,

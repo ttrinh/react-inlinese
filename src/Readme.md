@@ -29,22 +29,55 @@
 
 ### Let's style it
 ```jsx
-<div>
-    <p>
-        <InlineEditable
-            onSubmit={value => alert(value)}
-            value="Do you want some tacos?"
-            primaryColor="orange"
-            secondaryColor="yellow"
-            hoverStyleString="color: yellow; background-color: orange;"
-            roundness="10px"
-            submitText="Sure"
-            cancelText="No Taco"
-        >
-            Do you want some tacos?
-        </InlineEditable>
-    </p>
-</div>
+<p>
+    <InlineEditable
+        onSubmit={value => alert(value)}
+        value="Do you want some tacos?"
+        primaryColor="orange"
+        secondaryColor="yellow"
+        hoverStyleString="color: yellow; background-color: orange;"
+        roundness="10px"
+        submitText="Sure"
+        cancelText="No Taco"
+    >
+        Do you want some tacos?
+    </InlineEditable>
+</p>
+```
+
+### Format text on change
+
+```js static
+const formatMyText = (value) => {
+    // .. do some formatter
+    return formattedValue;
+}
+```
+
+* Formatter:Function
+* Passed down argument: value
+* Must return a string
+* This is where the input can be manipulated
+
+```jsx
+<p>
+    <InlineEditable
+        onSubmit={value => alert(value)}
+        value="this formatter doesn't accept dollar sign"
+        roundness="0px"
+        formatter={
+            (value) => {
+                if (value.match(/\$/)) {
+                    return value.replace(/\$/g, '');
+                } else {
+                    return value;
+                }
+            }
+        }
+    >
+        this formatter doesn't accept dollar sign
+    </InlineEditable>
+</p>
 ```
 
 ### How about a button? And of course, No Edit Icon needed.
@@ -97,3 +130,8 @@
     </InlineEditable>
 </p>
 ```
+
+### POSSIBLE FEATURES
+* Autoexpand
+* Window view determines Input Box dimension
+* Tab support

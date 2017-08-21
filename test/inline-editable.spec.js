@@ -110,6 +110,21 @@ describe('Inline Editable ', () => {
         expect(W.state().show).to.equal(false);
     });
 
+    it('it should format text with user defined formatter', () => {
+        // no dollar sign formatter
+        const noDollarFormatter = value => value.match(/\$/)
+            ? value.replace(/\$/g, '')
+            : value;
+
+        const W = Wrapper({
+            formatter: noDollarFormatter,
+        });
+        W.setState({ show: true });
+        const Textarea = W.find('textarea');
+        Textarea.simulate('change', { target: { value: 'hello$' } });
+        expect(W.state().value).to.equal('hello');
+    });
+
     it('it should reset value on Esc or Tab', () => {
         const W = Wrapper();
         W.setState({ show: true });
