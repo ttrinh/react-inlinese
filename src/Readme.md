@@ -96,7 +96,7 @@ const formatMyText = (value) => {
         value=""
         showEditIcon={false}
         hoverStyleString=""
-        placeholder="What's my name?"
+        placeholder="Space OPM"
     >
         <img src="http://www.doppelme.com/images/examples/fade2.gif" />
     </ReactInlinese>
@@ -134,5 +134,4 @@ const formatMyText = (value) => {
 ```
 
 ### POSSIBLE FEATURES
-* Autoexpand
 * Window view determines Input Box dimension

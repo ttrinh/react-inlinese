@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MdCreate from 'react-icons/lib/md/create';
 
 import Buttons from './Subs/Buttons';
-import { findParentByClass, calcInputBoxStyle } from './helpers';
+import { findParentByClass, calcInputBoxStyle, getAutoGrowStyle } from './helpers';
 import { Container, InputBox, Label, Hint } from './style';
 
 
@@ -14,6 +14,7 @@ import { Container, InputBox, Label, Hint } from './style';
  * ###### Features
  * - Simple & clean.
  * - No interference on the current textflow.
+ * - Autogrow text input height
  * - Keyboard & Tab friendly (tab around and see).
  * - Simple theme customization.
  * - Format-able text input.
@@ -29,16 +30,23 @@ class ReactInlinese extends React.Component {
             iconStyle: {},
         };
 
+        this.hover = this.hover.bind(this);
         this.switch = this.switch.bind(this);
         this.submit = this.submit.bind(this);
-        this.hover = this.hover.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
         this.clickOutside = this.clickOutside.bind(this);
+        this.autoGrowHeight = this.autoGrowHeight.bind(this);
+        this.stopListeningOutclick = this.stopListeningOutclick.bind(this);
+        this.startListeningOutclick = this.startListeningOutclick.bind(this);
     }
 
     componentDidMount() {
         this.node = findDOMNode(this);
+    }
+
+    componentWillUnmount() {
+        this.stopListeningOutclick();
     }
 
     onChange(e) {
@@ -53,10 +61,12 @@ class ReactInlinese extends React.Component {
             }
 
             this.setState({ value: formattedValue });
+            this.autoGrowHeight();
             return;
         }
 
         this.setState({ value });
+        this.autoGrowHeight();
     }
 
     onKeyDown(e) {
@@ -77,6 +87,15 @@ class ReactInlinese extends React.Component {
         });
     }
 
+    autoGrowHeight() {
+        const textareaAutoGrowStyle = getAutoGrowStyle(this.textareaClone, this.state.inputStyle);
+        this.setState({ inputStyle: textareaAutoGrowStyle });
+    }
+
+    startListeningOutclick() { document.addEventListener('click', this.clickOutside, false); }
+    stopListeningOutclick() { document.removeEventListener('click', this.clickOutside, false); }
+    clickOutside(e) { if (!this.node.contains(e.target)) this.switch(); }
+
     switch(e) {
         if (this.props.disabled) return;
 
@@ -84,7 +103,7 @@ class ReactInlinese extends React.Component {
         // Add dom listener for click outside
         // Calculate Input Box style and set value
         if (!this.state.show) {
-            document.addEventListener('click', this.clickOutside, false);
+            this.startListeningOutclick();
 
             if (e) {
                 this.setInputStyle(e.target);
@@ -93,15 +112,10 @@ class ReactInlinese extends React.Component {
 
         // Not in edit mode. Remove the listener
         } else {
-            document.removeEventListener('click', this.clickOutside, false);
+            this.stopListeningOutclick();
         }
 
         this.setState({ show: !this.state.show });
-    }
-
-    clickOutside(e) {
-        if (this.node.contains(e.target)) return;
-        this.switch();
     }
 
     submit() {
@@ -164,6 +178,16 @@ class ReactInlinese extends React.Component {
                     color={primaryColor}
                     roundness={roundness}
                 >
+                    {
+                        this.state.show &&
+                        <span
+                            className="textarea-clone"
+                            style={this.state.inputStyle}
+                            ref={(node) => { this.textareaClone = node; }}
+                        >
+                            {this.state.value}
+                        </span>
+                    }
                     {
                         this.state.show &&
                         <textarea

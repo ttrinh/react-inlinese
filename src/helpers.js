@@ -46,3 +46,29 @@ export const calcInputBoxStyle = (node, config = defaultConfig) => {
     };
 };
 
+
+/**
+* Get textarea auto-grow height throught its clone
+*
+* @param {Node}     cloneNode               node
+* @param {Object}   currentStyle            textarea current style
+* @return {Number}                          textarea height
+**/
+export const getAutoGrowStyle = (cloneNode, currentStyle) => {
+    if (!cloneNode) return currentStyle;
+
+    const cloneDimension = cloneNode.getBoundingClientRect();
+    const cloneHeight = cloneDimension.height;
+    const verticalExtra = defaultConfig.extraSpace * 2;
+
+    // no grow when both heights are equal
+    if (cloneHeight === currentStyle.height) {
+        return currentStyle;
+    }
+
+    return {
+        ...currentStyle,
+        height: cloneHeight + verticalExtra,
+    };
+};
+

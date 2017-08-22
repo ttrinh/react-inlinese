@@ -5,7 +5,7 @@ import { expect, assert } from 'chai';
 import Buttons from '../src/Subs/Buttons';
 import InlineEditable from '../src/index';
 import { Container, InputBox, Label, Hint } from '../src/style';
-import { calcInputBoxStyle, findParentByClass } from '../src/helpers';
+import { calcInputBoxStyle, findParentByClass, getAutoGrowStyle } from '../src/helpers';
 
 
 // generate fake key event
@@ -193,10 +193,24 @@ describe('Inline Editable ', () => {
 
 
 describe('Box Helpers: calcInputBoxStyle', () => {
-    const node = (w, h) => ({
-        offsetWidth: w || 10,
-        offsetHeight: h || 10,
-    });
+    // fake node
+    const node = (w, h) => (function(){
+        function Node() {
+            this.offsetWidth = w || 10;
+            this.offsetHeight = h || 10;
+        }
+
+        Node.prototype.getBoundingClientRect = () => ({
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: w,
+            height: h,
+        });
+
+        return new Node();
+    }());
 
     it('should return object', () => {
         assert.isObject(calcInputBoxStyle(node()));
@@ -223,6 +237,25 @@ describe('Box Helpers: calcInputBoxStyle', () => {
             minHeight: 50,
         };
         expect(calcInputBoxStyle(newNode, config)).to.eql(expected);
+    })
+
+    it('should calculate autogrow height', () => {
+        const newNode = node(300, 80);
+        const currentStyle = {
+            width: 100,
+            height: 50,
+        };
+        const expected = { width: 100, height: 100 };
+        expect(getAutoGrowStyle(newNode, currentStyle)).to.eql(expected);
+    })
+
+    it('should not calculate autogrow height when both node heights are equal', () => {
+        const newNode = node(300, 50);
+        const currentStyle = {
+            width: 100,
+            height: 50,
+        };
+        expect(getAutoGrowStyle(newNode, currentStyle)).to.eql(currentStyle);
     })
 });
 
