@@ -198,6 +198,7 @@ describe('Box Helpers: calcInputBoxStyle', () => {
         function Node() {
             this.offsetWidth = w || 10;
             this.offsetHeight = h || 10;
+            this.children = [];
         }
 
         Node.prototype.getBoundingClientRect = () => ({

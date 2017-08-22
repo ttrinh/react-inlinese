@@ -82,25 +82,28 @@ const formatMyText = (value) => {
 
 ### How about button or else?
 ```jsx
-<p>
-    <ReactInlinese
-        onSubmit={value => alert(value)}
-        value="This is a value different from the button."
-        showEditIcon={false}
-        hoverStyleString=""
-    >
-        <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
-    </ReactInlinese>
-    <ReactInlinese
-        onSubmit={value => alert(value)}
-        value=""
-        showEditIcon={false}
-        hoverStyleString=""
-        placeholder="Space OPM"
-    >
-        <img src="http://www.doppelme.com/images/examples/fade2.gif" />
-    </ReactInlinese>
-</p>
+<div>
+    <p>
+        <ReactInlinese
+            onSubmit={value => alert(value)}
+            value="This is a value different from the button."
+            showEditIcon={false}
+            hoverStyleString=""
+        >
+            <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
+        </ReactInlinese>
+    </p>
+    <p>
+        <ReactInlinese
+            onSubmit={value => alert(value)}
+            value="Space OPM"
+            showEditIcon={false}
+            hoverStyleString=""
+        >
+            <img src="http://www.doppelme.com/images/examples/fade2.gif" />
+        </ReactInlinese>
+    </p>
+</div>
 ```
 
 
@@ -109,7 +112,8 @@ const formatMyText = (value) => {
 <p>
     <ReactInlinese
         onSubmit={value => alert(value)}
-        value="I am not a button fan"
+        value=""
+        placeholder="..placeholder"
         showButtons={false}
 
     >
@@ -135,3 +139,6 @@ const formatMyText = (value) => {
 
 ### POSSIBLE FEATURES
 * Window view determines Input Box dimension
+
+### BUG
+* Children as element should not be inlined

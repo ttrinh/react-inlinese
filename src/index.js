@@ -144,7 +144,7 @@ class ReactInlinese extends React.Component {
 
     render() {
         const {
-            value, onSubmit, disabled, submitText, cancelText,
+            value, onSubmit, disabled, submitText, cancelText, style,
             placeholder, primaryColor, secondaryColor, roundness,
             hoverStyleString, showButtons, showEditIcon, children,
         } = this.props;
@@ -154,13 +154,14 @@ class ReactInlinese extends React.Component {
         }
 
         return (
-            <Container>
+            <Container style={style}>
                 <Label
                     className="rie"
                     onClick={this.switch}
                     tabIndex={disabled ? '' : '0'}
                     onFocus={this.switch}
                     onMouseEnter={this.hover}
+                    style={style}
                     hoverStyleString={disabled ? 'cursor: inherit;' : hoverStyleString}
                 >
                     {children}
@@ -245,6 +246,9 @@ ReactInlinese.propTypes = {
     /** Formatter. Acticate on value changed and pass down value as argument */
     formatter: PropTypes.func,
 
+    /** Share style for Container and text wrapper */
+    style: PropTypes.object,
+
     /** Primary color. */
     primaryColor: PropTypes.string,
 
@@ -280,6 +284,7 @@ ReactInlinese.defaultProps = {
     submitText: 'apply',
     cancelText: 'cancel',
     placeholder: '',
+    style: {},
     disabled: false,
     showEditIcon: true,
     showButtons: true,

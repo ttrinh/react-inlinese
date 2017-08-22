@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.span`
     position: relative;
-    display: inline-block;
+    // display: inline-block;
     text-align: left;
     cursor: inherit;
 
@@ -11,7 +11,7 @@ export const Container = styled.span`
     * { box-sizing: border-box; }
 
     .rie {
-        display: inline-block;
+        // display: inline-block;
     }
 
     .rie-edit-indicator {
