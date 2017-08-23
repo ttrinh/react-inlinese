@@ -8,11 +8,11 @@ import MdClear from 'react-icons/lib/md/clear';
 const Container = styled.span`
     display: block;
     position: absolute;
-    bottom: -25px;
+    bottom: -24px;
     right: 0;
     left: 0;
     text-align: right;
-    background-color: rgba(255,255,255,.95);
+    // background-color: rgba(255,255,255,.95);
     color: #ccc;
 
     button {

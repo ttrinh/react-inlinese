@@ -83,26 +83,25 @@ const formatMyText = (value) => {
 ### How about button or else?
 ```jsx
 <div>
-    <p>
-        <ReactInlinese
-            onSubmit={value => alert(value)}
-            value="This is a value different from the button."
-            showEditIcon={false}
-            hoverStyleString=""
-        >
-            <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
-        </ReactInlinese>
-    </p>
-    <p>
-        <ReactInlinese
-            onSubmit={value => alert(value)}
-            value="Space OPM"
-            showEditIcon={false}
-            hoverStyleString=""
-        >
-            <img src="http://www.doppelme.com/images/examples/fade2.gif" />
-        </ReactInlinese>
-    </p>
+
+    <ReactInlinese
+        onSubmit={value => alert(value)}
+        value="This is a value different from the button."
+        showEditIcon={false}
+        hoverStyleString=""
+    >
+        <button style={{ cursor: 'pointer' }}>BUTTON HERE 😄</button>
+    </ReactInlinese>
+    <ReactInlinese
+        onSubmit={value => alert(value)}
+        value="Space OPM"
+        showEditIcon={false}
+        hoverStyleString=""
+        style={{ display: 'inline-block' }}
+    >
+        <img src="http://www.doppelme.com/images/examples/fade2.gif" />
+    </ReactInlinese>
+
 </div>
 ```
 

@@ -180,6 +180,19 @@ class ReactInlinese extends React.Component {
                     roundness={roundness}
                 >
                     {
+                        showButtons &&
+                        <Buttons
+                            submit={this.submit}
+                            cancel={this.switch}
+                            bgColor={primaryColor}
+                            textColor={secondaryColor}
+                            submitText={submitText}
+                            cancelText={cancelText}
+                            roundness={roundness}
+                        />
+                    }
+
+                    {
                         this.state.show &&
                         <span
                             className="textarea-clone"
@@ -208,21 +221,7 @@ class ReactInlinese extends React.Component {
                         <span><b>Esc</b>Cancel</span>
                         <span><b>Shift+Enter</b>New Line</span>
                     </Hint>
-
-                    {
-                        showButtons &&
-                        <Buttons
-                            submit={this.submit}
-                            cancel={this.switch}
-                            bgColor={primaryColor}
-                            textColor={secondaryColor}
-                            submitText={submitText}
-                            cancelText={cancelText}
-                            roundness={roundness}
-                        />
-                    }
                 </InputBox>
-
 
             </Container>
         );
