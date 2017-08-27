@@ -5,7 +5,16 @@
   "author": "Triet Trinh",
   "license": "MIT",
   "main": "./dist/index.js",
-  "keywords": ["react", "reactjs", "inline", "edit", "text", "editable", "editing", "popup"],
+  "keywords": [
+    "react",
+    "reactjs",
+    "inline",
+    "edit",
+    "text",
+    "editable",
+    "editing",
+    "popup"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ttrinh/react-inlinese.git"
@@ -25,10 +34,6 @@
     "doc:build": "styleguidist build"
   },
   "devDependencies": {
-    "jsdom": "^11.1.0",
-    "jsdom-global": "^3.0.2",
-    "react-styleguidist": "^6.0.16",
-    "webpack": "^2.6.1",
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
@@ -40,9 +45,13 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
+    "jsdom": "^11.1.0",
+    "jsdom-global": "^3.0.2",
     "loaders": "^1.1.3",
     "mocha": "^3.4.2",
-    "react-addons-test-utils": "^15.5.1"
+    "react-addons-test-utils": "^15.5.1",
+    "react-styleguidist": "^6.0.16",
+    "webpack": "^2.6.1"
   },
   "dependencies": {
     "prop-types": "^15.5.10",
