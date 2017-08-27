@@ -22,10 +22,13 @@ import Inlinese from 'react-inlinese';
 
 // ...
 // see documentation for available options
-<Inlinese
-    onSubmit={value => alert(value)}
-    value="Editable text"
->
-    Editable text
-</Inlinese>
+const MyComponent = () => (
+    <Inlinese
+        onSubmit={value => alert(value)}
+        value="Editable text"
+    >
+        Editable text
+    </Inlinese>
+);
+
 ```
