@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ttrinh/tie.svg?branch=master)](https://travis-ci.org/ttrinh/tie)
+[![Build Status](https://travis-ci.org/ttrinh/react-inlinese.svg?branch=master)](https://travis-ci.org/ttrinh/react-inlinese)
 
 ## Demo & Documentation
 > [https://ttrinh.github.io/react-inlinese](https://ttrinh.github.io/react-inlinese/)

@@ -1,6 +1,6 @@
 {
   "name": "react-inlinese",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "React inline text edit with a separate inline popup box",
   "author": "Triet Trinh",
   "license": "MIT",
