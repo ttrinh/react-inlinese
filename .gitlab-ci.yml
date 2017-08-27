@@ -4,6 +4,6 @@ pages:
   - ls
   artifacts:
     paths:
-    - public
+    - docs
   only:
   - master

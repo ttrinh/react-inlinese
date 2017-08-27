@@ -11,5 +11,5 @@ module.exports = {
 	},
 	showCode: false,
 	showSidebar: false,
-	styleguideDir: 'public',
+	styleguideDir: 'docs',
 };
