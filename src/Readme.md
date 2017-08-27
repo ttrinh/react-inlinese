@@ -136,8 +136,22 @@ const formatMyText = (value) => {
 </p>
 ```
 
-### POSSIBLE FEATURES
+### TODO FEATURES
 * Window view determines Input Box dimension
 
-### BUG
-* Children as element should not be inlined
+### DEV
+INSTALLATION
+`yarn add `
+
+DEV (Run Documentation)
+`yarn start`
+
+BUILD
+`yarn build`
+
+TEST
+`yarn test`
+`yarn test:watch`
+
+BUILD DOC (Documentation page will be built after pushing)
+`yarn doc:build`
