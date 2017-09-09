@@ -1,9 +1,0 @@
-pages:
-  stage: deploy
-  script:
-  - ls
-  artifacts:
-    paths:
-    - docs
-  only:
-  - master

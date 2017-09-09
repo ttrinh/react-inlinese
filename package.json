@@ -23,7 +23,7 @@
     "url": "https://github.com/ttrinh/react-inlinese/issues"
   },
   "scripts": {
-    "build": "babel -d dist/ src/",
+    "build": "BABEL_ENV=production babel -d dist/ src/",
     "watch": "babel --watch -d dist/ src/",
     "test": "mocha --require test/.setup.js test/*.spec.js",
     "test:watch": "mocha --require test/.setup.js --watch test/*.spec.js",
@@ -35,8 +35,9 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-minify": "^0.2.0",
     "babel-register": "^6.24.1",
     "chai": "^4.0.2",
     "enzyme": "^2.8.2",
