@@ -1,6 +1,6 @@
 ### Another Inline Edit.. Jeez
 ```jsx
-<div>
+<div style={{ fontSize: '2em', lineHeight: '1.9' }}>
     <p>
         <ReactInlinese
             onSubmit={value => alert(value)}

@@ -1,11 +1,10 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import MdCreate from 'react-icons/lib/md/create';
 
 import Buttons from './Subs/Buttons';
-import { findParentByClass, calcInputBoxStyle, getAutoGrowStyle } from './helpers';
 import { Container, InputBox, Label, Hint } from './style';
+import { findParentByClass, calcInputBoxStyle, getAutoGrowStyle } from './helpers';
 
 
 /**
@@ -39,10 +38,6 @@ class ReactInlinese extends React.Component {
         this.autoGrowHeight = this.autoGrowHeight.bind(this);
         this.stopListeningOutclick = this.stopListeningOutclick.bind(this);
         this.startListeningOutclick = this.startListeningOutclick.bind(this);
-    }
-
-    componentDidMount() {
-        this.node = findDOMNode(this);
     }
 
     componentWillUnmount() {
@@ -94,7 +89,13 @@ class ReactInlinese extends React.Component {
 
     startListeningOutclick() { document.addEventListener('click', this.clickOutside, false); }
     stopListeningOutclick() { document.removeEventListener('click', this.clickOutside, false); }
-    clickOutside(e) { if (!this.node.contains(e.target)) this.switch(); }
+
+    clickOutside(e) {
+        console.log(this);
+        if (!this.node.contains(e.target)) {
+            this.switch();
+        }
+    }
 
     switch(e) {
         if (this.props.disabled) return;
@@ -154,7 +155,10 @@ class ReactInlinese extends React.Component {
         }
 
         return (
-            <Container style={style}>
+            <Container
+                style={style}
+                innerRef={(node) => { this.node = node; }}
+            >
                 <Label
                     className="rie"
                     onClick={this.switch}

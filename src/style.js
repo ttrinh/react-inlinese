@@ -21,13 +21,17 @@ export const Container = styled.span`
         width: 24px;
         height: 24px;
         text-align: center;
-        font: sans-serif;
+        font-family: sans-serif;
         font-weight: normal;
         border-radius: 50%;
         border: 1px solid rgba(0,0,0,.2);
         transition: all .12s ease;
         color: #555;
         opacity: 0;
+        line-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     &:hover .rie-edit-indicator {
@@ -66,8 +70,7 @@ export const InputBox = styled.span`
         border: 1px solid rgba(0,0,0,.1);
         border-bottom-right-radius: 0;
         margin: 0;
-        overflow-y: hidden;
-
+        overflow: hidden;
     }
 
     textarea {

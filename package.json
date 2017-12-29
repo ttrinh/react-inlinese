@@ -25,8 +25,7 @@
   "scripts": {
     "build": "BABEL_ENV=production babel -d dist/ src/",
     "watch": "babel --watch -d dist/ src/",
-    "test": "mocha --require test/.setup.js test/*.spec.js",
-    "test:watch": "mocha --require test/.setup.js --watch test/*.spec.js",
+    "test": "mocha --require test/.setup.js --watch test/*.spec.js",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
     "start": "styleguidist server",
