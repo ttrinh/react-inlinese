@@ -12,11 +12,11 @@ import { findParentByClass, calcInputBoxStyle, getAutoGrowStyle } from './helper
  *
  * ###### Features
  * - Simple & clean.
- * - No interference on the current textflow.
+ * - Use Textarea for input.
  * - Autogrow text input height
- * - Keyboard & Tab friendly (tab around and see).
- * - Simple theme customization.
  * - Format-able text input.
+ * - Keyboard & Tab friendly).
+ * - Simple theme customization.
  * - Support presentational element as String or Component. However, value must be string.
  */
 class ReactInlinese extends React.Component {
@@ -91,10 +91,8 @@ class ReactInlinese extends React.Component {
     stopListeningOutclick() { document.removeEventListener('click', this.clickOutside, false); }
 
     clickOutside(e) {
-        console.log(this);
-        if (!this.node.contains(e.target)) {
-            this.switch();
-        }
+        const isInside = this.node.contains(e.target);
+        if (!isInside) this.switch();
     }
 
     switch(e) {
@@ -132,8 +130,7 @@ class ReactInlinese extends React.Component {
     }
 
     hover(e) {
-        const node = e.target;
-        const height = node.offsetHeight;
+        const height = e.target.offsetHeight;
         if (!height) return;
 
         this.setState({
@@ -145,9 +142,10 @@ class ReactInlinese extends React.Component {
 
     render() {
         const {
-            value, onSubmit, disabled, submitText, cancelText, style,
+            value, onSubmit, disabled, submitText, cancelText,
             placeholder, primaryColor, secondaryColor, roundness,
             hoverStyleString, showButtons, showEditIcon, children,
+            styles,
         } = this.props;
 
         if (typeof value !== 'string' || !onSubmit) {
@@ -156,16 +154,15 @@ class ReactInlinese extends React.Component {
 
         return (
             <Container
-                style={style}
+                styleString={styles.main}
                 innerRef={(node) => { this.node = node; }}
             >
                 <Label
                     className="rie"
                     onClick={this.switch}
-                    tabIndex={disabled ? '' : '0'}
                     onFocus={this.switch}
+                    tabIndex={disabled ? '' : '0'}
                     onMouseEnter={this.hover}
-                    style={style}
                     hoverStyleString={disabled ? 'cursor: inherit;' : hoverStyleString}
                 >
                     {children}
@@ -220,10 +217,13 @@ class ReactInlinese extends React.Component {
                         />
                     }
 
-                    <Hint color={primaryColor}>
+                    <Hint
+                        color={primaryColor}
+                        title="Enter to apply, Esc to cancel"
+                        styleString={styles.hint}
+                    >
                         <span><b>Enter</b>Apply</span>
                         <span><b>Esc</b>Cancel</span>
-                        <span><b>Shift+Enter</b>New Line</span>
                     </Hint>
                 </InputBox>
 
@@ -248,9 +248,6 @@ ReactInlinese.propTypes = {
 
     /** Formatter. Acticate on value changed and pass down value as argument */
     formatter: PropTypes.func,
-
-    /** Share style for Container and text wrapper */
-    style: PropTypes.object,
 
     /** Primary color. */
     primaryColor: PropTypes.string,
@@ -281,13 +278,17 @@ ReactInlinese.propTypes = {
         PropTypes.element,
         PropTypes.string,
     ]),
+
+    /** STRING: Hover style */
+    styles: PropTypes.shape({
+        hint: PropTypes.string,
+    }),
 };
 
 ReactInlinese.defaultProps = {
     submitText: 'apply',
     cancelText: 'cancel',
     placeholder: '',
-    style: {},
     disabled: false,
     showEditIcon: true,
     showButtons: true,
@@ -295,6 +296,10 @@ ReactInlinese.defaultProps = {
     secondaryColor: 'white',
     roundness: '3px',
     hoverStyleString: 'border-bottom: 1px dashed rgba(0,0,0,.2);',
+    styles: {
+        main: '',
+        hint: '',
+    },
 };
 
 export default ReactInlinese;

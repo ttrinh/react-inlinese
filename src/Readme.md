@@ -24,6 +24,16 @@
         </b>
         Proin id arcu accumsan, volutpat nunc quis, rhoncus diam.
     </p>
+    <p>
+        Sed consequat lectus auctor et.
+        <ReactInlinese
+            onSubmit={value => alert(value)}
+            value="Editable text is somewhere in the paragraph"
+        >
+            Editable text is somewhere in the paragraph
+        </ReactInlinese>
+        . diet aliquam leo, sed consequat lectus auctor et.
+    </p>
 </div>
 ```
 
@@ -64,7 +74,6 @@ const formatMyText = (value) => {
     <ReactInlinese
         onSubmit={value => alert(value)}
         value="this formatter doesn't accept dollar sign"
-        roundness="0px"
         formatter={
             (value) => {
                 if (value.match(/\$/)) {
@@ -137,21 +146,21 @@ const formatMyText = (value) => {
 ```
 
 ### TODO FEATURES
+* Simplify theming
+* Simplify style strings
 * Window view determines Input Box dimension
 
 ### DEV
-INSTALLATION
-`yarn add `
+```jsx static
+INSTALL DEPENDENCIES
+`yarn`
 
 DEV (Run Documentation)
 `yarn start`
 
-BUILD
-`yarn build`
-
 TEST
 `yarn test`
-`yarn test:watch`
 
-BUILD DOC (Documentation page will be built after pushing)
-`yarn doc:build`
+BUILD (Package & Build Documentation)
+`yarn build`
+```

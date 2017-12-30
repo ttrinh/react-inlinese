@@ -10,6 +10,7 @@ module.exports = {
     },
     showSidebar: false,
     showCode: true,
+    showUsage: true,
     styleguideDir: 'docs',
     highlightTheme: 'monokai',
     theme: {

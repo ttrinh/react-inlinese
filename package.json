@@ -1,7 +1,7 @@
 {
   "name": "react-inlinese",
   "version": "0.9.2",
-  "description": "React inline text edit with a separate inline popup box",
+  "description": "React editable inline text component",
   "author": "Triet Trinh",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -23,7 +23,7 @@
     "url": "https://github.com/ttrinh/react-inlinese/issues"
   },
   "scripts": {
-    "build": "BABEL_ENV=production babel -d dist/ src/",
+    "build": "BABEL_ENV=production babel -d dist/ src/ && doc:build",
     "watch": "babel --watch -d dist/ src/",
     "test": "mocha --require test/.setup.js --watch test/*.spec.js",
     "styleguide": "styleguidist server",
@@ -54,10 +54,12 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
     "react-icons": "^2.2.5",
     "styled-components": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "prop-types": "^15.5.10"
   }
 }

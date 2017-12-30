@@ -27,7 +27,7 @@ export const Container = styled.span`
         border: 1px solid rgba(0,0,0,.2);
         transition: all .12s ease;
         color: #555;
-        opacity: 0;
+        /* opacity: 0; */
         line-height: 0;
         display: flex;
         align-items: center;
@@ -38,6 +38,8 @@ export const Container = styled.span`
         right: -26px;
         opacity: 1;
     }
+
+    ${props => props.styleString};
 `;
 
 const elasticShow = keyframes`
@@ -134,4 +136,6 @@ export const Hint = styled.span`
         border-radius: 3px;
         border: 1px solid rgba(0,0,0,.2);
     }
+
+    ${props => props.styleString};
 `;
