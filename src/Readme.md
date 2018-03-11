@@ -110,6 +110,16 @@ const formatMyText = (value) => {
     >
         <img src="http://www.doppelme.com/images/examples/fade2.gif" />
     </ReactInlinese>
+    <ReactInlinese
+        onSubmit={value => alert(value)}
+        value="This is a value different from the button."
+        showEditIcon={false}
+        hoverStyleString=""
+    >
+        Mixed children elements <br />
+        Mixed children elements <br />
+        <p>Mixed children elements</p>
+    </ReactInlinese>
 
 </div>
 ```
