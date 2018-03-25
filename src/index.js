@@ -67,11 +67,15 @@ class ReactInlinese extends React.Component {
     this.autoGrowHeight();
   }
 
+  // Enter(13) without SHIFT == submit,
+  // ESCAPE(27) OR TAB(9) == Reset
   onKeyDown(e) {
-    if (e.keyCode === 13 && !e.shiftKey) this.submit(); // enter
-    // escape or tab
+    if (e.keyCode === 13 && !e.shiftKey) {
+      this.submit();
+    }
+
     if (e.keyCode === 27 || e.keyCode === 9) {
-      this.setState({ value: this.props.value }); // reset
+      this.setState({ value: this.props.value });
       this.switch();
     }
   }
@@ -157,6 +161,8 @@ class ReactInlinese extends React.Component {
       styles
     } = this.props;
 
+    const { show } = this.state;
+
     if (typeof value !== 'string' || !onSubmit) {
       return null;
     }
@@ -173,7 +179,6 @@ class ReactInlinese extends React.Component {
           onClick={this.switch}
           onFocus={this.switch}
           tabIndex={disabled ? '' : '0'}
-          onMouseEnter={this.hover}
           hoverStyleString={disabled ? 'cursor: inherit;' : hoverStyleString}
         >
           <span>
@@ -181,7 +186,7 @@ class ReactInlinese extends React.Component {
 
             {!disabled &&
               showEditIcon &&
-              !this.state.show && (
+              !show && (
                 <span className="rie-edit-indicator-wrapper">
                   <span className="rie-edit-indicator">
                     <MdCreate size={14} />
@@ -192,11 +197,11 @@ class ReactInlinese extends React.Component {
         </Label>
 
         <InputBox
-          className={this.state.show ? 'rie-show' : ''}
+          className={show ? 'rie-show' : ''}
           color={primaryColor}
           roundness={roundness}
         >
-          {this.state.show && (
+          {show && (
             <span
               className="textarea-clone"
               style={this.state.inputStyle}
@@ -207,7 +212,8 @@ class ReactInlinese extends React.Component {
               {this.state.value}
             </span>
           )}
-          {this.state.show && (
+
+          {show && (
             <textarea
               tabIndex="-1"
               type="text"
@@ -220,7 +226,7 @@ class ReactInlinese extends React.Component {
             />
           )}
 
-          <div className="rie-button-area">
+          <span className="rie-button-area">
             {showButtons && (
               <Buttons
                 submit={this.submit}
@@ -245,7 +251,7 @@ class ReactInlinese extends React.Component {
                 <b>Esc</b>Cancel
               </span>
             </Hint>
-          </div>
+          </span>
         </InputBox>
       </Container>
     );

@@ -11,7 +11,7 @@
         . diet aliquam leo, sed consequat lectus auctor et.
     </p>
     <p>
-        <b>
+        <b style={{ fontFamily: 'Arial, sans-serif' }}>
             <ReactInlinese
                 onSubmit={value => alert(value)}
                 value="It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. It works with long line of text. "
