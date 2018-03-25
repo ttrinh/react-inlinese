@@ -14,9 +14,10 @@ export const findParentByClass = (element, className) =>
  * Calculate width and height of the input box
  * based on width and height of the label text
  *
- * @param {Node}     node        the text label element
- * @param {Object}   config      { padding, extraSpace, minWidth, minHeight }
- * @return {Object}              { width, height }
+ * @param {Node}     node           the text label element
+ * @param {Object}   config         { padding, extraSpace, minWidth, minHeight }
+ * @param {Node}     currentTarget   current element target clicked
+ * @return {Object}                 { width, height }
  **/
 const defaultConfig = {
   padding: 10,
@@ -24,7 +25,11 @@ const defaultConfig = {
   minWidth: 300,
   minHeight: 50
 };
-export const calcInputBoxStyle = (node, config = defaultConfig) => {
+export const calcInputBoxStyle = (
+  node,
+  config = defaultConfig,
+  currentTarget = {}
+) => {
   const { padding, extraSpace, minWidth, minHeight } = config;
 
   // calculate line height
@@ -35,6 +40,9 @@ export const calcInputBoxStyle = (node, config = defaultConfig) => {
     lineHeight =
       parseInt(window.getComputedStyle(node)['line-height'], 10) || 0;
   }
+
+  const textPosition = currentTarget.getBoundingClientRect();
+  console.log(textPosition);
 
   // The box should includes side paddings and extra space
   // vertical bottom padding should extend because the buttons & descriptions
@@ -49,7 +57,9 @@ export const calcInputBoxStyle = (node, config = defaultConfig) => {
 
   return {
     width,
-    height
+    height,
+    top: textPosition.top,
+    left: textPosition.left
   };
 };
 

@@ -62,6 +62,11 @@ export const InputBox = styled.span`
   position: absolute;
   top: -10px;
   left: -10px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
   overflow: hidden;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 6px, rgba(0, 0, 0, 0.09) 0px 1px 4px;
@@ -70,7 +75,8 @@ export const InputBox = styled.span`
 
   &.rie-show {
     height: auto;
-    display: block;
+    display: flex;
+    flex-direction: column;
     opacity: 1;
     animation: ${elasticShow} 0.2s ease-in;
   }
@@ -86,6 +92,8 @@ export const InputBox = styled.span`
     transition: all 0.1s ease;
     margin: 0;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
   }
 
   textarea {

@@ -158,7 +158,8 @@ const formatMyText = (value) => {
 ### TODO FEATURES
 * Simplify theming
 * Simplify style strings
-* Window view determines Input Box dimension
+* Window view determines Input Box dimension (apply fixed positioning for Input Box, solves cases when text is in the middle or the end of the sentence)
+
 
 ### DEV
 ```jsx static

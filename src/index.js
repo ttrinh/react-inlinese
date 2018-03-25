@@ -85,7 +85,7 @@ class ReactInlinese extends React.Component {
     if (this.state.show) return;
     const node = findParentByClass(element, 'rie');
     this.setState({
-      inputStyle: calcInputBoxStyle(node)
+      inputStyle: calcInputBoxStyle(node, undefined, element)
     });
   }
 
@@ -200,11 +200,11 @@ class ReactInlinese extends React.Component {
           className={show ? 'rie-show' : ''}
           color={primaryColor}
           roundness={roundness}
+          style={this.state.inputStyle}
         >
           {show && (
             <span
               className="textarea-clone"
-              style={this.state.inputStyle}
               ref={node => {
                 this.textareaClone = node;
               }}
@@ -222,7 +222,6 @@ class ReactInlinese extends React.Component {
               onChange={this.onChange}
               value={this.state.value}
               ref={input => input && input.focus()}
-              style={this.state.inputStyle}
             />
           )}
 
